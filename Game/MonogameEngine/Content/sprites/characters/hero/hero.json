@@ -1,0 +1,60 @@
+{
+	"//1":"All sprites must be the same dimension",
+	"//2":"All sprites should have a 4k, 1440, and 1080 version",
+	"//3":"This config should describe the frame duration and moving offsets",
+	"//4":"Idle offset needs to be accomplished in frames. Attack frame 1 needs to line up with idle frames",
+	"//5":"Standardize space from bottom of image to character floor",
+
+	"character":"hero",
+
+	"idle_left":
+	{
+		"loops":"true",
+		"path":"idle",
+		"frames":[
+			{ "frame":"0001", "duration":"187" },
+			{ "frame":"0002", "duration":"187" },
+			{ "frame":"0003", "duration":"187" },
+			{ "frame":"0004", "duration":"187" },
+		]
+	},
+
+	"idle_right":
+	{
+		"loops":"true",
+		"path":"idle",
+		"flipped":"true",
+		"frames":[
+			{ "frame":"0001", "duration":"187" },
+			{ "frame":"0002", "duration":"187" },
+			{ "frame":"0003", "duration":"187" },
+			{ "frame":"0004", "duration":"187" },
+		]
+	},
+
+	"attack_right":
+	{
+		"path":"attack_right",
+		"frames":[
+			{ "frame":"0001", "duration":"151" },
+			{ "frame":"0002", "duration":"151" },
+			{ "frame":"0003", "duration":"200" },
+			{ "frame":"0004", "duration":"151" },
+		]
+	},
+
+	"walk_right":
+	{
+		"path":"walk_right",
+		"frames":[
+			{ "frame":"0001", "duration":"101", "dx":"21" },
+			{ "frame":"0002", "duration":"101", "dx":"21" },
+			{ "frame":"0003", "duration":"101", "dx":"21" },
+			{ "frame":"0004", "duration":"101", "dx":"21" },
+			{ "frame":"0005", "duration":"101", "dx":"21" },
+			{ "frame":"0006", "duration":"101", "dx":"21" },
+			{ "frame":"0007", "duration":"101", "dx":"21" },
+			{ "frame":"0008", "duration":"101", "dx":"21" },
+		]
+	}
+}
