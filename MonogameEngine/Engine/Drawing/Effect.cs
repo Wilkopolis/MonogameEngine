@@ -11,7 +11,11 @@ namespace MonogameEngine
     {
         public enum EffectType
         {
-            Lighten
+            Lighten,
+            // Masks
+            IncludeMask, ExcludeMask, KeyMask, RadialMask,
+            // Blur
+            Blur, Pixelate, Noise
         }
 
         public abstract partial class Element
@@ -25,7 +29,7 @@ namespace MonogameEngine
                 }
 
                 EffectAgent result = null;
-                int priority = 0;
+                int priority = 10;
 
                 switch (type)
                 {
@@ -36,7 +40,6 @@ namespace MonogameEngine
                         result.Parameters["R"] = 1.25f;
                         result.Parameters["G"] = 1.25f;
                         result.Parameters["B"] = 1.25f;
-                        priority = 99;
                         break;
                 }
 
@@ -55,16 +58,111 @@ namespace MonogameEngine
                     return null;
                 }
 
-                return null;
+                EffectAgent result = null;
+                int priority = 99;
+
+                switch (mask)
+                {
+                    case EffectType.ExcludeMask:
+
+                        result = new EffectAgent();
+                        result.Type = EffectAgentType.RectangleMask;
+                        result.Effect = Effects["rectangular_mask"];
+                        result.Parameters["X"] = x;
+                        result.Parameters["Y"] = y;
+                        result.Parameters["W"] = w;
+                        result.Parameters["H"] = h;
+                        result.ScrollKey = scrollKey;
+
+                        break;
+
+                    case EffectType.IncludeMask:
+
+                        result = new EffectAgent();
+                        result.Type = EffectAgentType.RectangleMask;
+                        result.Effect = Effects["inverse_mask"];
+                        result.Parameters["X"] = x;
+                        result.Parameters["Y"] = y;
+                        result.Parameters["W"] = w;
+                        result.Parameters["H"] = h;
+                        result.ScrollKey = scrollKey;
+
+                        break;
+
+                    case EffectType.KeyMask:
+
+                        result = new EffectAgent();
+                        result.Type = EffectAgentType.KeyMask;
+                        result.Effect = Effects["key_mask"];
+                        result.Parameters["X"] = x;
+                        result.Parameters["Y"] = y;
+                        result.ScrollKey = scrollKey;
+                        result.Texture = texture;
+
+                        break;
+
+                    case EffectType.RadialMask:
+
+                        result = new EffectAgent();
+                        result.Type = EffectAgentType.RadialMask;
+                        result.Effect = Effects["radial_mask"];
+                        result.Parameters["Radius"] = x;
+
+                        break;
+                }
+
+                result.Priority = priority;
+                result.EffectType = mask;
+                this.EffectAgents.Add(result);
+
+                return result;
             }
 
-            public virtual EffectAgent AddBlur(EffectType blur, float amount = 0, float x = 0, float y = 0)
+            public virtual EffectAgent AddBlur(EffectType blur, float amount = 0)
             {
                 if (this is CompoundElement || this is Button)
                 {
                     Oops();
                     return null;
                 }
+
+
+                EffectAgent result = null;
+                int priority = 99;
+
+                switch (blur)
+                {
+                    case EffectType.Blur:
+
+                        result = new EffectAgent();
+                        result.Type = EffectAgentType.Blur;
+                        result.Parameters["Radius"] = amount;
+                        result.Effect = Effects["blur"];
+
+                        break;
+
+                    case EffectType.Pixelate:
+
+                        result = new EffectAgent();
+                        result.Type = EffectAgentType.Pixelate;
+                        result.Parameters["Radius"] = amount;
+                        result.Effect = Effects["pixelate"];
+
+                        break;
+
+                    case EffectType.Noise:
+
+                        result = new EffectAgent();
+                        result.Type = EffectAgentType.Noise;
+                        result.Parameters["Amount"] = amount;
+                        result.Effect = Effects["noise"];
+
+                        break;
+                }
+
+                result.Priority = priority;
+                result.EffectType = blur;
+                this.EffectAgents.Add(result);
 
                 return null;
             }
@@ -111,7 +209,6 @@ namespace MonogameEngine
             {
                 return this.EffectAgents;
             }
-
         }
     }
 }

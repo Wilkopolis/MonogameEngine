@@ -1,16 +1,113 @@
 ﻿using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace MonogameEngine
 {
     public partial class MonogameEngine
     {
+        // tracks our library of sounds
+        public static Dictionary<string, SoundEntry> SoundEntries = new Dictionary<string, SoundEntry>();
+        // tracks current running sounds
         public static Dictionary<string, Sound> Sounds = new Dictionary<string, Sound>();
 
         void LoadSounds()
         {
+            string path = Directory.GetCurrentDirectory();
+            string newPath = Path.GetFullPath(Path.Combine(path, @"..\..\..\Content\sounds\"));
+
+            List<DirectoryInfo> directories = new List<DirectoryInfo>();
+            List<FileInfo> files = new List<FileInfo>();
+
+            Stack<DirectoryInfo> tempFolders = new Stack<DirectoryInfo>();
+            tempFolders.Push(new DirectoryInfo(newPath));
+
+            DirectoryInfo currentFolder = tempFolders.Pop();
+
+            // populate MediaFileInfo with all files we find in the video directory
+            while (true)
+            {
+                // add to the fileSet
+                foreach (FileInfo f in currentFolder.GetFiles())
+                {
+                    int lastDot = f.Name.LastIndexOf('.');
+                    string fileExtension = f.Name.Substring(lastDot + 1, f.Name.Length - lastDot - 1).ToLower();
+                    if (fileExtension == "wav")
+                        files.Add(f);
+                }
+
+                // add to the folderSet
+                foreach (DirectoryInfo d in currentFolder.GetDirectories())
+                    tempFolders.Push(d);
+
+                if (tempFolders.Count == 0)
+                    break;
+
+                currentFolder = tempFolders.Pop();
+            }
+
+            foreach (FileInfo f in files)
+            {
+                int indx = f.FullName.IndexOf("Content") + 8;
+                int keyIndx = f.FullName.IndexOf("Content") + 15;
+                int lastDot = f.Name.LastIndexOf('.');
+                int fileExtension = f.Name.Substring(lastDot + 1, f.Name.Length - lastDot - 1).Length + 1;
+                string localPath = f.FullName.Substring(indx, f.FullName.Length - indx - fileExtension);
+                string key = f.FullName.Substring(keyIndx, f.FullName.Length - keyIndx - fileExtension);
+                key = key.Replace(@"\", "/");
+                SoundEntries[key] = new SoundEntry(localPath);
+            }
+
+            // for now we're loading them all
+            foreach (SoundEntry sound in SoundEntries.Values)
+                sound.Load();
+        }
+        public class SoundEntry
+        {
+            public string Path = "";
+            public SoundEffect SoundEffect;
+            public bool Loaded = false;
+            public bool Disposable = false;
+            public bool Missing = false;
+
+            public SoundEntry(string path, bool disposable = false)
+            {
+                this.Path = path;
+                this.Disposable = disposable;
+            }
+
+            public void Load()
+            {
+                if (content == null)
+                {
+                    content = new Microsoft.Xna.Framework.Content.ContentManager(_content.ServiceProvider);
+                }
+
+                if (!this.Loaded)
+                {
+                    try
+                    {
+                        this.SoundEffect = content.Load<SoundEffect>(this.Path);
+                    }
+                    catch (Exception e)
+                    {
+                        LOG("Missing: " + this.Path);
+                        this.Missing = true;
+                    }
+                }
+
+                this.Loaded = true;
+            }
+
+            public void Unload()
+            {
+                this.SoundEffect.Dispose();
+
+                this.Loaded = false;
+            }
         }
 
         public class Sound
@@ -21,12 +118,17 @@ namespace MonogameEngine
             public bool Loops = false;
             public float Volume;
             public float Pitch = 0;
-            public float PitchRange = .5f;
+            public float PitchRange = 0f;
             public Sound Next = null;
             
             public Sound(SoundEffect effect, float volume)
             {
                 this.Effects.Add(effect);
+                this.Volume = volume;
+            }
+            public Sound(SoundEntry effect, float volume)
+            {
+                this.Effects.Add(effect.SoundEffect);
                 this.Volume = volume;
             }
 

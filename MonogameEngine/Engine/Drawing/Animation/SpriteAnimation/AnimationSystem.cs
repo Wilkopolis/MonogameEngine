@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -34,10 +35,7 @@ namespace MonogameEngine
             public Vector2 SpriteDimensions = Vector2.Zero;
 
             // sprite specific offset for damage numbers
-            public Vector2 DamageTextOffset = new Vector2(0, 90);
-            public Vector2 CenterOffset = new Vector2(0, 0);
-            public Vector2 EmitterOffset = new Vector2(0, 0); 
-            public Vector2 SmokeOffset = new Vector2(0, 0);
+            public Dictionary<string, Vector2> Offsets = new Dictionary<string, Vector2>();
 
             public AnimationSystem Clone()
             {
@@ -67,9 +65,8 @@ namespace MonogameEngine
                     result.DamageRight = this.DamageRight.Clone();
 
                 result.SpriteDimensions = this.SpriteDimensions;
-                result.DamageTextOffset = this.DamageTextOffset;
-                result.CenterOffset = this.CenterOffset;
-                result.EmitterOffset = this.EmitterOffset;
+
+                result.Offsets = new Dictionary<string, Vector2>(this.Offsets);
 
                 return result;
             }
@@ -166,7 +163,7 @@ namespace MonogameEngine
             }
         }
 
-        public abstract class AnimationSequence
+        public class AnimationSequence
         {
             public Sprite SpriteTarget;
             public Sound Sound;
@@ -177,14 +174,21 @@ namespace MonogameEngine
             public bool Loop;
             // flipped or not
             public bool Flipped = false;
-            // for some reason works differently on walkcycle
-            public int WalkCycleFrameSkip = 0;
-            // for death animations
-            public bool AddOffset = false;
 
-            public abstract Animation Play(Screen screen, float speed = 1, Action callback = null, Func<Animation, bool> checkComplete = null);
-            public abstract Animation Play(Screen screen, float delta, float speed = 1, Action callback = null, Func<Animation, bool> checkComplete = null);
-            public abstract AnimationSequence Clone();
+            public virtual Animation Play(Screen screen, float speed = 1, Action callback = null, Func<Animation, bool> checkComplete = null) 
+            {
+                return null;
+            }
+
+            public virtual Animation Play(Screen screen, float delta, float speed = 1, Action callback = null, Func<Animation, bool> checkComplete = null)
+            {
+                return null;
+            }
+
+            public virtual AnimationSequence Clone()
+            {
+                return null;
+            }
         }
 
         public class AnimationStage
@@ -192,18 +196,16 @@ namespace MonogameEngine
             public string SpriteKey;
             public double Duration;
             public double Elapsed;
-            public Vector2 IdleOffset;
             public Vector2 FrameOffset;
             // for flipping
             public Vector2 SpriteDimensions;
             public Func<AnimationStage, Vector2> GetOffset;
 
             // for walking/running
-            public AnimationStage(string spriteKey, double duration, Vector2 idleOffset = new Vector2(), Vector2 frameOffset = new Vector2(), Vector2 spriteDimensions = new Vector2(), Func<AnimationStage, Vector2> offsetFunction = null)
+            public AnimationStage(string spriteKey, double duration, Vector2 frameOffset = new Vector2(), Vector2 spriteDimensions = new Vector2(), Func<AnimationStage, Vector2> offsetFunction = null)
             {
                 this.SpriteKey = spriteKey;
                 this.Duration = duration;
-                this.IdleOffset = idleOffset;
                 this.FrameOffset = frameOffset;
                 this.SpriteDimensions = spriteDimensions;
                 this.GetOffset = offsetFunction;
@@ -215,32 +217,21 @@ namespace MonogameEngine
             public string FrameKey;
             // for walk/run animations
             public Vector2 FrameOffset;
-            // how offset the animation is from the idle
-            public Vector2 IdleOffset;
             public int Length;
 
             // idle
             public AnimationFrame(string frameKey, int length)
             {
                 this.FrameKey = frameKey;
-                this.IdleOffset = Vector2.Zero;
                 this.FrameOffset = Vector2.Zero;
                 this.Length = length;
             }
 
-            // attack/death/casting
-            public AnimationFrame(string frameKey, Vector2 idleOffset, int length)
-            {
-                this.FrameKey = frameKey;
-                this.IdleOffset = idleOffset;
-                this.Length = length;
-            }
-
             // walk/run
-            public AnimationFrame(string frameKey, Vector2 idleOffset, Vector2 frameOffset, int length)
+            [JsonConstructor]
+            public AnimationFrame(string frameKey, Vector2 frameOffset, int length)
             {
                 this.FrameKey = frameKey;
-                this.IdleOffset = idleOffset;
                 this.FrameOffset = frameOffset;
                 this.Length = length;
             }
@@ -275,7 +266,7 @@ namespace MonogameEngine
                 Vector2 dimensions = new Vector2(this.SpriteTarget.Texture.Width, this.SpriteTarget.Texture.Height);
 
                 foreach (AnimationFrame key in this.Frames)
-                    stages.Add(new AnimationStage(key.FrameKey, key.Length / speed, key.IdleOffset * scale, key.FrameOffset * scale, dimensions));
+                    stages.Add(new AnimationStage(key.FrameKey, key.Length / speed, key.FrameOffset * scale, dimensions));
 
                 Animation result = null;
                 if (this.SpriteTarget != null)
@@ -283,8 +274,7 @@ namespace MonogameEngine
                     result = new FrameAnimation((Sprite)this.SpriteTarget, stages, this.Sound, callback)
                     {
                         Loop = this.Loop,
-                        Flipped = this.Flipped,
-                        AddOffset = this.AddOffset
+                        Flipped = this.Flipped
                     };
                     screen.Animations[this.SpriteTarget.Key] = result;
 
@@ -335,7 +325,7 @@ namespace MonogameEngine
                 Vector2 dimensions = new Vector2(this.SpriteTarget.Texture.Width, this.SpriteTarget.Texture.Height);
 
                 foreach (AnimationFrame key in this.Frames)
-                    stages.Add(new AnimationStage(key.FrameKey, key.Length / speed, key.IdleOffset * scale, key.FrameOffset * scale, dimensions, stage1Func));
+                    stages.Add(new AnimationStage(key.FrameKey, key.Length / speed, key.FrameOffset * scale, dimensions, stage1Func));
 
                 Animation result = null;
                 switch (this.Direction)
@@ -357,7 +347,7 @@ namespace MonogameEngine
                 screen.Animations[this.SpriteTarget.Key] = result;
 
                 // do this once to set the sprite and resize it and add the offsets and stuff
-                screen.Animations[this.SpriteTarget.Key].Tick();
+                result.Tick();
 
                 return result;
             }
@@ -380,27 +370,17 @@ namespace MonogameEngine
                 }
 
                 foreach (AnimationFrame key in this.Frames)
-                    stages.Add(new AnimationStage(key.FrameKey, key.Length / speed, key.IdleOffset * scale, key.FrameOffset * scale, new Vector2(this.SpriteTarget.Width, this.SpriteTarget.Height), stage1Func));
+                    stages.Add(new AnimationStage(key.FrameKey, key.Length / speed, key.FrameOffset * scale, new Vector2(this.SpriteTarget.Width, this.SpriteTarget.Height), stage1Func));
 
                 // check to see if any frames match our current frame - start from there
-                int i = 0;
-                while (i < stages.Count)
-                {
-                    if (Textures[stages[i].SpriteKey].Texture == this.SpriteTarget.Texture)
-                        break;
+                //int i = 0;
+                //while (i < stages.Count)
+                //{
+                //    if (Textures[stages[i].SpriteKey].Texture == this.SpriteTarget.Texture)
+                //        break;
 
-                    i++;
-                }
-
-                if (i < stages.Count)
-                {
-                    for (int j = 0; j <= i + this.WalkCycleFrameSkip; j++)
-                    {
-                        AnimationStage swap = stages[0];
-                        stages.RemoveAt(0);
-                        stages.Add(swap);
-                    }
-                }
+                //    i++;
+                //}
 
                 Animation result = null;
                 switch (this.Direction)

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using static MonogameEngine.MonogameEngine;
 
 #pragma warning disable IDE0017 // Simplify object initialization
 
@@ -21,9 +22,16 @@ namespace MonogameEngine
                 this.Scale = scale;
                 this.Position = new Vector2(x, y);
                 this.zIndex = zIndex;
-
-                this.BlendState = BlendState.AlphaBlend;
-
+                //this.BlendState = new BlendState()
+                //{
+                //    ColorSourceBlend = Blend.SourceAlpha,
+                //    AlphaSourceBlend = Blend.One,
+                //    ColorDestinationBlend = Blend.InverseSourceAlpha,
+                //    AlphaDestinationBlend = Blend.One,
+                //    ColorBlendFunction = BlendFunction.Add,
+                //    AlphaBlendFunction = BlendFunction.Add,
+                //};
+               
                 this.Resize();
             }
             public Sprite(TextureEntry t = null, float x = 0, float y = 0, float scale = 1f, float zIndex = 1f)
@@ -34,9 +42,16 @@ namespace MonogameEngine
                 this.Scale = scale;
                 this.Position = new Vector2(x, y);
                 this.zIndex = zIndex;
-
-                this.BlendState = BlendState.AlphaBlend;
-
+                //this.BlendState = new BlendState()
+                //{
+                //    ColorSourceBlend = Blend.SourceAlpha,
+                //    AlphaSourceBlend = Blend.One,
+                //    ColorDestinationBlend = Blend.InverseSourceAlpha,
+                //    AlphaDestinationBlend = Blend.One,
+                //    ColorBlendFunction = BlendFunction.Add,
+                //    AlphaBlendFunction = BlendFunction.Add,
+                //};
+               
                 this.Resize();
             }
 
@@ -46,9 +61,16 @@ namespace MonogameEngine
                 this.Scale = scale;
                 this.Position = new Vector2(x, y);
                 this.zIndex = zIndex;
-
-                this.BlendState = BlendState.AlphaBlend;
-
+                //this.BlendState = new BlendState()
+                //{
+                //    ColorSourceBlend = Blend.SourceAlpha,
+                //    AlphaSourceBlend = Blend.One,
+                //    ColorDestinationBlend = Blend.InverseSourceAlpha,
+                //    AlphaDestinationBlend = Blend.One,
+                //    ColorBlendFunction = BlendFunction.Add,
+                //    AlphaBlendFunction = BlendFunction.Add,
+                //};
+               
                 this.Resize();
             }
 
@@ -58,9 +80,16 @@ namespace MonogameEngine
                 this.Scale = scale;
                 this.Position = new Vector2(x, y);
                 this.zIndex = zIndex;
-
-                this.BlendState = BlendState.AlphaBlend;
-
+                //this.BlendState = new BlendState()
+                //{
+                //    ColorSourceBlend = Blend.SourceAlpha,
+                //    AlphaSourceBlend = Blend.One,
+                //    ColorDestinationBlend = Blend.InverseSourceAlpha,
+                //    AlphaDestinationBlend = Blend.One,
+                //    ColorBlendFunction = BlendFunction.Add,
+                //    AlphaBlendFunction = BlendFunction.Add,
+                //};
+               
                 this.Resize();
             }
 

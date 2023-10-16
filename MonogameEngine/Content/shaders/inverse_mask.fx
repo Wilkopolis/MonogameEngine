@@ -8,7 +8,6 @@ float screen_w;  // viewport width in pixels
 float screen_h;	 // viewport height in pixels
 int tex_w;	 	 // width of this texture in pixels
 int tex_h;       // height of this texture in pixels
-float alpha;	 // alpha of the texture
 int flipped = 0;
 sampler s0;
 
@@ -21,13 +20,9 @@ float4 PixelShaderFunction(float2 coords: TEXCOORD0) : COLOR0
 	if (flipped == 1)
 		xPos = 1 - coords.x;
 
-	float2 absolute_position = float2(xPos * tex_w/screen_w + pos_x, coords.y * tex_h/screen_h + pos_y);
+	float2 absolute_position = float2(xPos * tex_w + pos_x, coords.y * tex_h + pos_y);
 
 	if (absolute_position.x < x || absolute_position.x > x + w || absolute_position.y < y || absolute_position.y > y + h)
-	{
-		// color.rgba *= alpha;
-	}
-	else
 	{
 		color.rgba = 0;
 	}

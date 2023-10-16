@@ -81,10 +81,10 @@ namespace MonogameEngine
                 Vector2 CurrentOffset = CurrentStage.GetOffset(CurrentStage);
                 Vector2 TotalOffset = this.ElapsedOffset + CurrentOffset;
 
-                this.Offset = TotalOffset + CurrentStage.IdleOffset;
+                this.Offset = TotalOffset + CurrentStage.FrameOffset;
                 if (this.Flipped)
                 {
-                    this.Offset.X = (CurrentStage.SpriteDimensions.X - this.Target.Texture.Width) * this.Target.Scale + TotalOffset.X - CurrentStage.IdleOffset.X;
+                    this.Offset.X = (CurrentStage.SpriteDimensions.X - this.Target.Texture.Width) * this.Target.Scale + TotalOffset.X - CurrentStage.FrameOffset.X;
                 }
 
                 CurrentStage.Elapsed += MsEllapsed - this.LastFrame;

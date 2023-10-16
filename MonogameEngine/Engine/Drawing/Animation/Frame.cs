@@ -12,7 +12,6 @@ namespace MonogameEngine
             public bool Loop = false;
             public int LoopIndex = 0;
             public bool CorrectFlipped = true;
-            public bool AddOffset = false;
             
             public FrameAnimation() { }
             public FrameAnimation(Sprite target, List<AnimationStage> stages, Sound sound = null, Action callback = null, bool pauses = false)
@@ -79,7 +78,7 @@ namespace MonogameEngine
                 this.Target.FlipHorizontal = this.Flipped;
 
                 // set its offset from the idle animation
-                this.Offset = CurrentStage.IdleOffset + CurrentStage.FrameOffset;
+                this.Offset = CurrentStage.FrameOffset;
                 if (this.Flipped && this.CorrectFlipped)
                 {
                     this.Offset.X = (CurrentStage.SpriteDimensions.X - this.Target.Texture.Width) * this.Target.Scale - this.Offset.X;
@@ -97,10 +96,6 @@ namespace MonogameEngine
                 }
 
                 base.Complete();
-
-                // add the death animation offset
-                // if (this.AddOffset)
-                //     this.Target.Position += this.Offset;
 
                 this.Over = true;
                 this.Running = false;

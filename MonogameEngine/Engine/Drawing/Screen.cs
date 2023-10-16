@@ -31,6 +31,8 @@ namespace MonogameEngine
             public Dictionary<string, Element> Storage = new Dictionary<string, Element>();
             public Dictionary<string, List<Element>> DeepStorage = new Dictionary<string, List<Element>>();
 
+            public Action<float> UpdateHandler = null;
+
             public Screen(int width, int height)
             {
                 this.Texture = new RenderTarget2D(graphics, width, height, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
@@ -122,6 +124,8 @@ namespace MonogameEngine
                     if (element is Screen screen)
                         screen.Update(deltaTime);
                 }
+
+                this.UpdateHandler?.Invoke(deltaTime);
             }
 
             public override void Render(bool direct = false)

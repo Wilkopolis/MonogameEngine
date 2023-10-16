@@ -34,7 +34,7 @@ namespace MonogameEngine
             List<string> buttonNames = new List<string>
             {
                 "Box", "Sprite", "Text", "CompoundElement", "Button", "Dragging", "Tooltip", "Cursors",
-                "Sounds", "Screens", "Alpha", "Masks", "Cooldown", "Blurs", "Pixelate", "Noise", "Frame Animation",
+                "Sound", "Alpha", "Masks", "Cooldown", "Blur", "Pixelate", "Noise", "Keyboard", "Frame Animation",
                 "Character", "ColorShift", "Stroke", "DropShadow", "Smoke", "Fog", "Glow", "LootBeam", "Sparkle", 
                 "LevelUp", "Zap"
             };
@@ -97,42 +97,67 @@ namespace MonogameEngine
             Test_AddCursorsScreen();
 
             // sound demo
-
-            // keys input
-
-            // screen layers
+            Test_AddSoundScreen();
 
             // alpha
+            Test_AddAlphaScreen();
 
             // masks, rectangle, inverse, black/white
+            Test_AddMaskScreen();
 
             // cooldown indicator (square / radial)
+            Test_AddCooldownScreen();
 
             // blurs
+            Test_AddBlurScreen();
 
             // pixelate
+            Test_AddPixelateScreen();
 
             // noise
+            Test_AddNoiseScreen();
+
+            // keyboard
+            Test_AddKeyboardScreen();
 
             // frame animation
+            Test_AddFrameAnimationScreen();
 
             // character animation system demo
+            Test_AddCharacterAnimationScreen();
 
             // color shift
+            Test_AddColorShiftScreen();
 
             // stroke
+            Test_AddStrokeScreen();
+
+            // drop shadow
+            Test_AddDropShadowScreen();
+
+            // smoke
+            Test_AddSmokeScreen();
+
+            // fog
+            Test_AddFogScreen();
 
             // glow
+            Test_AddGlowScreen();
 
             // stroke glow
+            Test_AddStrokeGlowScreen();
 
             // loot beam
+            Test_AddLootBeamScreen();
 
             // sparkle effect
+            Test_AddSparkleScreen();
 
             // level up / buff effect
+            Test_AddLevelUpScreen();
 
             // zap animation
+            Test_AddZapScreen();
 
             container.Elements["button0"].ClickHandler(container.Elements["button0"]);
         }
@@ -438,7 +463,7 @@ namespace MonogameEngine
             viewport.Add("sprite1", sprite1);
 
             Box box1 = new Box(150, 12, Col(64, 70, 220));
-            box1.Position.Y = sprite1.Bot() + 10;
+            box1.Position.Y = sprite1.Position.Y + sprite1.Height + 10;
             box1.Position.X = 195;
             viewport.Add("box1", box1);
 
@@ -800,6 +825,639 @@ namespace MonogameEngine
             exampleScreen.Position = new Vector2(270, 0);
         }
 
+        void Test_AddSoundScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["SoundExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            viewport.Flags["draggingSlider"] = 0;
+            Setting.SFXVOLUME = .1f;
+            Setting.MUSICVOLUME = .1f;
+
+            // draw the examples
+
+            // add a volume slider
+            Text volume = new Text(20, 10, "Volume: 0.1", Fonts.Library[FontFamily.K2D][16]);
+            viewport.Add("volume", volume);
+
+            Box ruler = new Box(200, 2, Col(50, 50, 57), 0, 25);
+            ruler.Position.X = volume.Position.X + volume.Width + 20;
+            viewport.Add("ruler", ruler);
+
+            Box slide = new Box(10, 20, Col(90, 90, 97), zIndex: 1.1f);
+            slide.Position.X = ruler.Position.X + 10;
+            slide.Position.Y = ruler.Position.Y - 9;
+            slide.Draggable = true;
+            slide.MouseOverCheck = true;
+            slide.Cursor = CursorType.Grab;
+            slide.DragHandler = delegate
+            {
+                viewport.Flags["draggingSlider"] = 1;
+            };
+            viewport.Add("slide", slide);
+
+            // add a sfx title
+            Text sfx = new Text(100, 150, "SFX", Fonts.Library[FontFamily.K2D][16]);
+            viewport.Add("sfx", sfx);
+
+            // add a sfx button
+            Button button1 = new Button();
+            Box button1Bg = new Box(80, 40, Col(35, 25, 50));
+            button1.Add(button1Bg);
+            Text button1Text = new Text(20, 3, "Play", Fonts.Library[FontFamily.K2D][16]);
+            button1.Add(button1Text);
+            viewport.Add("button1", button1);
+            button1.Position = new Vector2(120, 190);
+            button1.ClickHandler = delegate
+            {
+                Sound sound = new Sound(SoundEntries["sfx/quack"], .1f);
+                sound.Play();
+            };
+
+            // add a music title
+            Text music = new Text(100, 250, "Music", Fonts.Library[FontFamily.K2D][16]);
+            viewport.Add("music", music);
+
+            // add a music button
+            Button button2 = new Button();
+            Box button2Bg = new Box(80, 40, Col(35, 25, 50));
+            button2.Add(button2Bg);
+            Text button2Text = new Text(20, 3, "Play", Fonts.Library[FontFamily.K2D][16]);
+            button2.Add(button2Text);
+            viewport.Add("button2", button2);
+            button2.Position = new Vector2(120, 290);
+            button2.ClickHandler = delegate
+            {
+                foreach (Sound sound1 in Sounds.Values)
+                    sound1.Stop();
+
+                Sounds.Clear();
+
+                Sound sound = new Sound(SoundEntries["music/menu"], .1f);
+                sound.Song = true;
+                sound.Play();
+                Sounds["music"] = sound;
+            };
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
+
+        void Test_AddAlphaScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["AlphaExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            // draw the examples
+
+            Sprite bg = new Sprite(0, 0, Textures["examples/battle_background"], zIndex:0);
+            viewport.Add("bg", bg);
+
+            List<BlendState> blendStates = new List<BlendState>() { BlendState.AlphaBlend, BlendState.NonPremultiplied, BlendState.Additive, BlendState.Opaque };
+
+            for (int i = 0; i < blendStates.Count; i++)
+            {
+                BlendState blendState = blendStates[i];
+                string entry = blendState.ToString().Split('.')[1];
+                Text title = new Text(0, 40, entry, Fonts.Library[FontFamily.K2D][14]);
+                title.CenterX(245 + i * 175);
+                viewport.Add("title" + i, title);
+
+                for (int j = 0; j < 11; j++)
+                {
+                    Box box = new Box(175, 45, Color.Red);
+                    box.CenterX(245 + i * 175);
+                    box.Position.Y = 75 + j * 45;
+                    box.Alpha = 1 - j * .1f;
+                    box.BlendState = blendState;
+                    viewport.Add("box" + i + j, box);
+                }
+            }
+
+            for (int j = 0; j < 11; j++)
+            {
+                Text title = new Text(110, 85 + j * 45, (1 - j * .1f).ToString("0.0"), Fonts.Library[FontFamily.K2D][14]);
+                viewport.Add("alpha" + j, title);
+            }
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
+
+        void Test_AddMaskScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["MasksExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            // draw the examples
+
+            Sprite bg = new Sprite(0, 0, Textures["examples/battle_background"], zIndex: 0);
+            viewport.Add("bg", bg);
+
+            bg.AddMask(EffectType.IncludeMask, 100, 100, viewport.Width - 200, viewport.Height - 200).Relative = true;
+            bg.AddMask(EffectType.ExcludeMask, 200, 150, 100, 200).Relative = true;
+            bg.AddMask(EffectType.KeyMask, 500, 200, texture: Textures["examples/key_mask"].Texture);
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
+
+        void Test_AddCooldownScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["CooldownExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            // draw the examples
+
+            Sprite bg = new Sprite(0, 0, Textures["examples/battle_background"], zIndex: 0);
+            viewport.Add("bg", bg);
+
+            Box radial = new Box(viewport.Width, viewport.Height, Color.Black) { Alpha = .8f };
+            EffectAgent mask = radial.AddMask(EffectType.RadialMask, .5f);
+            viewport.Add("radial", radial);
+
+            viewport.Animations["radial"] = new CustomAnimation(radial, 0, delegate (float percentCompelte)
+            {
+                mask.Parameters["Radius"] = 1 - (MsEllapsed % 2000 / 2000.0f);
+            });
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
+
+        void Test_AddBlurScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["BlurExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            // draw the examples
+
+            Sprite sprite1 = new Sprite(-20, 0, Textures["examples/Attack0001"]);
+            sprite1.Scale = .8f;
+            viewport.Add("sprite1", sprite1);
+
+            Sprite sprite2 = new Sprite(300, 0, Textures["examples/Attack0001"]);
+            sprite2.Scale = .8f;
+            viewport.Add("sprite2", sprite2);
+
+            Sprite sprite3 = new Sprite(620, 0, Textures["examples/Attack0001"]);
+            sprite3.Scale = .8f;
+            viewport.Add("sprite3", sprite3);
+
+            sprite2.AddBlur(EffectType.Blur, 4);
+            sprite3.AddBlur(EffectType.Blur, 12);
+            sprite2.BlendState = BlendState.AlphaBlend;
+            sprite3.BlendState = BlendState.AlphaBlend;
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
+
+        void Test_AddPixelateScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["PixelateExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            // draw the examples
+
+            Sprite sprite1 = new Sprite(-20, 0, Textures["examples/Attack0001"]);
+            sprite1.Scale = .8f;
+            viewport.Add("sprite1", sprite1);
+
+            Sprite sprite2 = new Sprite(300, 0, Textures["examples/Attack0001"]);
+            sprite2.Scale = .8f;
+            viewport.Add("sprite2", sprite2);
+
+            Sprite sprite3 = new Sprite(620, 0, Textures["examples/Attack0001"]);
+            sprite3.Scale = .8f;
+            viewport.Add("sprite3", sprite3);
+
+            sprite2.AddBlur(EffectType.Pixelate, 4);
+            sprite3.AddBlur(EffectType.Pixelate, 12);
+            sprite2.BlendState = BlendState.AlphaBlend;
+            sprite3.BlendState = BlendState.AlphaBlend;
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
+
+        void Test_AddNoiseScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["NoiseExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            // draw the examples
+
+            Sprite sprite1 = new Sprite(-20, 0, Textures["examples/Attack0001"]);
+            sprite1.Scale = .8f;
+            viewport.Add("sprite1", sprite1);
+
+            Sprite sprite2 = new Sprite(300, 0, Textures["examples/Attack0001"]);
+            sprite2.Scale = .8f;
+            viewport.Add("sprite2", sprite2);
+
+            Sprite sprite3 = new Sprite(620, 0, Textures["examples/Attack0001"]);
+            sprite3.Scale = .8f;
+            viewport.Add("sprite3", sprite3);
+
+            sprite2.AddBlur(EffectType.Noise, .2f);
+            sprite3.AddBlur(EffectType.Noise, .4f);
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
+
+        void Test_AddKeyboardScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["KeyboardExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            // draw the examples
+
+            List<Phrase> p1 = new List<Phrase>();
+            p1.Add(new Phrase("Theres nothing really to demonstrate with the keyboard functions. We would do something here if this was a real demo", Fonts.Library[FontFamily.K2D][16].Hue(Col(143, 140, 140))));
+            Paragraph paragraph1 = new Paragraph(p1, 600);
+            Element desc1 = MakeParagraph(paragraph1);
+            desc1.Center(new Vector2(viewport.Width / 2, viewport.Height / 2));
+            viewport.Add("description1", desc1);
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
+
+        void Test_AddFrameAnimationScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["Frame AnimationExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            // draw the examples
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
+
+        void Test_AddCharacterAnimationScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["CharacterExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            // draw the examples
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
+
+        void Test_AddColorShiftScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["ColorShiftExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            // draw the examples
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
+
+        void Test_AddStrokeScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["StrokeExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            // draw the examples
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
+
+        void Test_AddDropShadowScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["DropShadowExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            // draw the examples
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
+
+        void Test_AddSmokeScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["SmokeExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            // draw the examples
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
+
+        void Test_AddFogScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["FogExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            // draw the examples
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
+
+        void Test_AddGlowScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["GlowExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            // draw the examples
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
+
+        void Test_AddStrokeGlowScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["StrokeGlowExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            // draw the examples
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
+
+        void Test_AddLootBeamScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["LootBeamExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            // draw the examples
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
+
+        void Test_AddSparkleScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["SparkleExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            // draw the examples
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
+
+        void Test_AddLevelUpScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["LevelUpExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            // draw the examples
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
+
+        void Test_AddZapScreen()
+        {
+            Screen exampleScreen = new Screen(1920 - 270, 1080) { ClearColor = Col(15, 13, 13), zIndex = 2f };
+            Screens["ZapExample"] = exampleScreen;
+
+            // draw the viewport
+
+            Box viewportBg = new Box(1000, 600, Col(47, 37, 37));
+            viewportBg.Center(new Vector2(exampleScreen.Width / 2f, exampleScreen.Height / 2f - 200));
+            exampleScreen.Add("viewport_bg", viewportBg);
+
+            Screen viewport = new Screen(viewportBg.Width - 4, viewportBg.Height - 4) { ClearColor = Col(12, 10, 10), zIndex = 1.1f };
+            viewport.Center(viewportBg);
+            exampleScreen.Add("viewport", viewport);
+
+            // draw the examples
+
+            // draw the info
+
+            exampleScreen.Position = new Vector2(270, 0);
+        }
 
         void Test_MouseHandler()
         {
@@ -887,6 +1545,31 @@ namespace MonogameEngine
                     {
                         viewport.Remove(gold);
                     }
+                }
+            }
+            if (Screens.ContainsKey("SoundExample") && Screens["SoundExample"].Visible)
+            {
+                Screen buttonExample = Screens["SoundExample"];
+                Screen viewport = (Screen)buttonExample.Elements["viewport"];
+                Element slider = viewport.Elements["slide"];
+                Element ruler = viewport.Elements["ruler"];
+                Text volume = (Text)viewport.Elements["volume"];
+
+                if (LeftUpEvent && viewport.Flags["draggingSlider"] == 1)
+                    viewport.Flags["draggingSlider"] = 0;
+
+                if (viewport.Flags["draggingSlider"] == 1)
+                {
+                    slider.Position.X = CurrentMouseState.X;
+                    slider.Position.X -= slider.GetScreen().Pos().X;
+
+                    slider.Position.X = Math.Clamp(slider.Position.X, ruler.ScreenPos().X + 10, ruler.ScreenPos().X + ruler.Width - 20);
+
+                    float percent = (slider.Position.X - ruler.Position.X - 10) / (ruler.Width - 30);
+
+                    volume.String = "Volume: " + percent.ToString("0.0");
+                    Setting.SFXVOLUME = percent;
+                    Setting.MUSICVOLUME = percent;
                 }
             }
         }

@@ -1301,11 +1301,65 @@
 /processorParam:TextureFormat=Compressed
 /build:fonts/RobotoSlabRegular90.spritefont
 
+#begin shaders/blur.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:shaders/blur.fx
+
 #begin shaders/color_shift.fx
 /importer:EffectImporter
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
 /build:shaders/color_shift.fx
+
+#begin shaders/inverse_mask.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:shaders/inverse_mask.fx
+
+#begin shaders/key_mask.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:shaders/key_mask.fx
+
+#begin shaders/noise.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:shaders/noise.fx
+
+#begin shaders/pixelate.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:shaders/pixelate.fx
+
+#begin shaders/radial_mask.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:shaders/radial_mask.fx
+
+#begin shaders/rectangular_mask.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:shaders/rectangular_mask.fx
+
+#begin sounds/music/menu.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/music/menu.wav
+
+#begin sounds/sfx/quack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/sfx/quack.wav
 
 #begin sprites/core/cursors/book.png
 /importer:TextureImporter
@@ -1534,6 +1588,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:sprites/examples/description.png
+
+#begin sprites/examples/key_mask.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:sprites/examples/key_mask.png
 
 #begin sprites/examples/small/3.png
 /importer:TextureImporter
