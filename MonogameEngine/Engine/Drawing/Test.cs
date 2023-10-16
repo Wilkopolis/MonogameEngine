@@ -34,7 +34,7 @@ namespace MonogameEngine
             List<string> buttonNames = new List<string>
             {
                 "Box", "Sprite", "Text", "CompoundElement", "Button", "Dragging", "Tooltip", "Cursors",
-                "Sound", "Alpha", "Masks", "Cooldown", "Blur", "Pixelate", "Noise", "Keyboard", "Frame Animation",
+                "Sound", "Alpha", "Masks", "Cooldown", "Blur", "Pixelate", "Noise", "Keyboard",
                 "Character", "ColorShift", "Stroke", "DropShadow", "Smoke", "Fog", "Glow", "LootBeam", "Sparkle", 
                 "LevelUp", "Zap"
             };
@@ -119,9 +119,6 @@ namespace MonogameEngine
 
             // keyboard
             Test_AddKeyboardScreen();
-
-            // frame animation
-            Test_AddFrameAnimationScreen();
 
             // character animation system demo
             Test_AddCharacterAnimationScreen();
@@ -1212,7 +1209,39 @@ namespace MonogameEngine
 
             // draw the examples
 
+            AnimationSystem hero = AnimationSystems["hero"];
+            hero.Load();
+
+            Sprite sprite = new Sprite(Textures[hero.IdleLeft.Frames[0].FrameKey]);
+            sprite.Scale = .4f;
+            sprite.Resize();
+            sprite.Center(viewport.GetRelativeCenter());
+            viewport.Add("sprite", sprite);
+
+            // draw the sprite center
+            //Box centerPixel = new Box(3, 3, Color.Red);
+            //centerPixel.Center(sprite.GetLocalCenter() + hero.Offsets["Center"] * sprite.Scale);
+            //viewport.Add("centerPixel", centerPixel);
+
+            // draw the bounds
+            //Box outline = new Box(sprite.Width + 4, sprite.Height + 4, Color.Orange);
+            //outline.Center(sprite.GetLocalCenter());
+            //outline.zIndex = sprite.zIndex - .002f;
+            //viewport.Add("outline", outline);
+            //Box outlineFg = new Box(sprite.Width, sprite.Height, Col(12, 10, 10));
+            //outlineFg.Center(sprite.GetLocalCenter());
+            //outlineFg.zIndex = sprite.zIndex - .001f;
+            //viewport.Add("outlineFg", outlineFg);
+
             // draw the info
+
+            List<Phrase> p1 = new List<Phrase>();
+            p1.Add(new Phrase("WASD to walk, Space to attack.", Fonts.Library[FontFamily.K2D][16].Hue(Col(143, 140, 140))));
+            Paragraph paragraph1 = new Paragraph(p1, 600);
+            Element desc1 = MakeParagraph(paragraph1);
+            desc1.Center(new Vector2(viewport.Width / 2 + viewport.Position.X, 0));
+            desc1.Position.Y = 700;
+            exampleScreen.Add("description1", desc1);
 
             exampleScreen.Position = new Vector2(270, 0);
         }

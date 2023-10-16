@@ -31,9 +31,6 @@ namespace MonogameEngine
             public AnimationSequence Cast;
             public AnimationSequence Grab;
 
-            // sprite specific height measurement
-            public Vector2 SpriteDimensions = Vector2.Zero;
-
             // sprite specific offset for damage numbers
             public Dictionary<string, Vector2> Offsets = new Dictionary<string, Vector2>();
 
@@ -63,8 +60,6 @@ namespace MonogameEngine
                     result.DamageLeft = this.DamageLeft.Clone();
                 if (this.DamageRight != null)
                     result.DamageRight = this.DamageRight.Clone();
-
-                result.SpriteDimensions = this.SpriteDimensions;
 
                 result.Offsets = new Dictionary<string, Vector2>(this.Offsets);
 

@@ -268,7 +268,6 @@ namespace MonogameEngine
             //    DieRight = DieRight,
             //    DamageLeft = DamageLeft,
             //    DamageRight = DamageRight,
-            //    SpriteDimensions = new Vector2(376, 351),
             //};
             //system.Offsets["Floor"] = new Vector2(0, -10);
             //system.Offsets["Center"] = new Vector2(0, -170);
