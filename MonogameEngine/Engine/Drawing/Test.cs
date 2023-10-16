@@ -1212,11 +1212,19 @@ namespace MonogameEngine
             AnimationSystem hero = AnimationSystems["hero"];
             hero.Load();
 
-            Sprite sprite = new Sprite(Textures[hero.IdleLeft.Frames[0].FrameKey]);
+            Sprite sprite = new Sprite(Textures[hero.Sequences["IdleLeft"].Frames[0].FrameKey]);
             sprite.Scale = .4f;
             sprite.Resize();
             sprite.Center(viewport.GetRelativeCenter());
             viewport.Add("sprite", sprite);
+
+            Character character = new Character();
+            character.AnimationSystem = hero.Clone();
+            character.Sprite = sprite;
+            sprite.Target = character;
+            character.AnimationSystem.SetSource(character);
+
+            character.AnimateIdle();
 
             // draw the sprite center
             //Box centerPixel = new Box(3, 3, Color.Red);
@@ -1236,7 +1244,8 @@ namespace MonogameEngine
             // draw the info
 
             List<Phrase> p1 = new List<Phrase>();
-            p1.Add(new Phrase("WASD to walk, Space to attack.", Fonts.Library[FontFamily.K2D][16].Hue(Col(143, 140, 140))));
+            p1.Add(new Phrase("WASD to walk, Space to attack. I'm not going to improve this anymore. If this was a demo for somebody, I would.", Fonts.Library[FontFamily.K2D][16].Hue(Col(143, 140, 140))));
+            p1.Add(new Phrase("Depending on the game characters may work in so many different ways. Not worth the effort right now.", Fonts.Library[FontFamily.K2D][16].Hue(Col(143, 140, 140))));
             Paragraph paragraph1 = new Paragraph(p1, 600);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.Center(new Vector2(viewport.Width / 2 + viewport.Position.X, 0));
@@ -1517,8 +1526,8 @@ namespace MonogameEngine
             // button example
             if (Screens.ContainsKey("ButtonExample") && Screens["ButtonExample"].Visible)
             {
-                Screen buttonExample = Screens["ButtonExample"];
-                Screen viewport = (Screen)buttonExample.Elements["viewport"];
+                Screen exampleScreen = Screens["ButtonExample"];
+                Screen viewport = (Screen)exampleScreen.Elements["viewport"];
                 Button button = (Button)viewport.Elements["button1"];
                 Element bag = viewport.Elements["bagSprite"];
                 Text t1 = (Text)viewport.Elements["t1"];
@@ -1527,14 +1536,14 @@ namespace MonogameEngine
                 if (button.IsPressed())
                 {
                     // run the gold faucet
-                    float nextGold = buttonExample.Flags["nextGold"];
+                    float nextGold = exampleScreen.Flags["nextGold"];
                     if (MsEllapsed > nextGold)
                     {
                         // spawn gold
                         Sprite gold = new Sprite(Textures["examples/coins/1"]);
                         gold.zIndex = bag.zIndex + .001f;
                         gold.Position.Y = Random.Next(-30, -20);
-                        gold.Key = "gold" + buttonExample.Flags["hash"]++;
+                        gold.Key = "gold" + exampleScreen.Flags["hash"]++;
 
                         List<AnimationStage> stages = new List<AnimationStage>();
                         stages.Add(new AnimationStage("examples/coins/1", Random.Next(70, 80)));
@@ -1547,7 +1556,7 @@ namespace MonogameEngine
 
                         viewport.Add(gold);
 
-                        buttonExample.Flags["nextGold"] = MsEllapsed + Random.Next(10, 40);
+                        exampleScreen.Flags["nextGold"] = MsEllapsed + Random.Next(10, 40);
                     }
 
                     t1.String = "Button Pressed: Yes";
@@ -1576,10 +1585,11 @@ namespace MonogameEngine
                     }
                 }
             }
+            // sound example
             if (Screens.ContainsKey("SoundExample") && Screens["SoundExample"].Visible)
             {
-                Screen buttonExample = Screens["SoundExample"];
-                Screen viewport = (Screen)buttonExample.Elements["viewport"];
+                Screen exampleScreen = Screens["SoundExample"];
+                Screen viewport = (Screen)exampleScreen.Elements["viewport"];
                 Element slider = viewport.Elements["slide"];
                 Element ruler = viewport.Elements["ruler"];
                 Text volume = (Text)viewport.Elements["volume"];
@@ -1599,6 +1609,66 @@ namespace MonogameEngine
                     volume.String = "Volume: " + percent.ToString("0.0");
                     Setting.SFXVOLUME = percent;
                     Setting.MUSICVOLUME = percent;
+                }
+            }
+            // character example
+            if (Screens.ContainsKey("CharacterExample") && Screens["CharacterExample"].Visible)
+            {
+                Screen exampleScreen = Screens["CharacterExample"];
+                Screen viewport = (Screen)exampleScreen.Elements["viewport"];
+                Element sprite = viewport.Elements["sprite"];
+                Character character = sprite.Target as Character;
+
+                bool Moving = false;
+                bool Attack = false;
+                Direction MovingDirection = Direction.N;
+
+                // this overrides other input
+                if (character.Attacking)
+                { 
+                }
+                else
+                {
+                    // a simple movement logic, could be improved
+                    if (CurrentKeyboardState.IsKeyDown(Keys.D))
+                    {
+                        Moving = true;
+                        MovingDirection = Direction.E;
+                    }
+                    if (CurrentKeyboardState.IsKeyDown(Keys.A))
+                    {
+                        Moving = true;
+                        MovingDirection = Direction.W;
+                    }
+                    if (CurrentKeyboardState.IsKeyDown(Keys.W))
+                    {
+                        Moving = true;
+                        MovingDirection = Direction.N;
+                    }
+                    if (CurrentKeyboardState.IsKeyDown(Keys.S))
+                    {
+                        Moving = true;
+                        MovingDirection = Direction.S;
+                    }
+                    if (CurrentKeyboardState.IsKeyDown(Keys.Space))
+                    {
+                        Attack = true;
+                    }
+
+                    if (character.Moving && !Moving)
+                    {
+                        character.AnimateIdle();
+                    }
+
+                    if (Attack)
+                    {
+                        character.AnimateAttack(character.Direction);
+                    }
+
+                    if (Moving && !character.Moving)
+                    {
+                        character.AnimateWalking(MovingDirection, 2000);
+                    }
                 }
             }
         }

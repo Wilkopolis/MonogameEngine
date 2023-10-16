@@ -49,16 +49,16 @@ namespace MonogameEngine
 
             foreach (FileInfo f in files)
             {
-                AnimationSystem system = JsonConvert.DeserializeObject<AnimationSystem>(File.ReadAllText(f.FullName));
-             
-                if (system != null)
-                    AnimationSystems[f.Name.Replace(".json", "")] = system;
+                AnimationSystem animationSystem = JsonConvert.DeserializeObject<AnimationSystem>(File.ReadAllText(f.FullName));
+
+                if (animationSystem != null)
+                    AnimationSystems[f.Name.Replace(".json", "")] = animationSystem;
             }
 
             // make an animation system to serialize
 
-            // Idle Left
-            //AnimationSequence IdleLeft = new StaticAnimationSequence
+            ////// Idle Left
+            //AnimationSequence IdleLeft = new AnimationSequence
             //{
             //    Loop = true,
             //    Flipped = true,
@@ -71,7 +71,7 @@ namespace MonogameEngine
             //    }
             //};
             //// Idle Right
-            //AnimationSequence IdleRight = new StaticAnimationSequence
+            //AnimationSequence IdleRight = new AnimationSequence
             //{
             //    Loop = true,
             //    Frames = new List<AnimationFrame>()
@@ -83,7 +83,7 @@ namespace MonogameEngine
             //    }
             //};
             //// Walk Left
-            //AnimationSequence WalkLeft = new MovingAnimationSequence
+            //AnimationSequence WalkLeft = new AnimationSequence
             //{
             //    Direction = Direction.W,
             //    Flipped = true,
@@ -100,7 +100,7 @@ namespace MonogameEngine
             //    }
             //};
             //// Walk Right
-            //AnimationSequence WalkRight = new MovingAnimationSequence
+            //AnimationSequence WalkRight = new AnimationSequence
             //{
             //    Direction = Direction.E,
             //    Frames = new List<AnimationFrame>()
@@ -116,7 +116,7 @@ namespace MonogameEngine
             //    }
             //};
             //// Walk Up
-            //AnimationSequence WalkUp = new MovingAnimationSequence
+            //AnimationSequence WalkUp = new AnimationSequence
             //{
             //    Direction = Direction.N,
             //    Frames = new List<AnimationFrame>()
@@ -132,7 +132,7 @@ namespace MonogameEngine
             //    }
             //};
             //// Walk Down
-            //AnimationSequence WalkDown = new MovingAnimationSequence
+            //AnimationSequence WalkDown = new AnimationSequence
             //{
             //    Direction = Direction.S,
             //    Frames = new List<AnimationFrame>()
@@ -148,7 +148,7 @@ namespace MonogameEngine
             //    }
             //};
             //// Attack Left
-            //AnimationSequence AttackLeft = new StaticAnimationSequence
+            //AnimationSequence AttackLeft = new AnimationSequence
             //{
             //    Flipped = true,
             //    Frames = new List<AnimationFrame>()
@@ -164,7 +164,7 @@ namespace MonogameEngine
             //    }
             //};
             //// Attack Right
-            //AnimationSequence AttackRight = new StaticAnimationSequence
+            //AnimationSequence AttackRight = new AnimationSequence
             //{
             //    Frames = new List<AnimationFrame>()
             //    {
@@ -179,7 +179,7 @@ namespace MonogameEngine
             //    }
             //};
             //// Cast Left
-            //AnimationSequence CastLeft = new StaticAnimationSequence
+            //AnimationSequence CastLeft = new AnimationSequence
             //{
             //    Loop = true,
             //    Flipped = true,
@@ -189,7 +189,7 @@ namespace MonogameEngine
             //    }
             //};
             //// Cast Right
-            //AnimationSequence CastRight = new StaticAnimationSequence
+            //AnimationSequence CastRight = new AnimationSequence
             //{
             //    Loop = true,
             //    Frames = new List<AnimationFrame>()
@@ -198,7 +198,7 @@ namespace MonogameEngine
             //    }
             //};
             //// Die Left
-            //AnimationSequence DieLeft = new StaticAnimationSequence
+            //AnimationSequence DieLeft = new AnimationSequence
             //{
             //    Flipped = true,
             //    Frames = new List<AnimationFrame>()
@@ -215,7 +215,7 @@ namespace MonogameEngine
             //    }
             //};
             //// Die Right
-            //AnimationSequence DieRight = new StaticAnimationSequence
+            //AnimationSequence DieRight = new AnimationSequence
             //{
             //    Frames = new List<AnimationFrame>()
             //    {
@@ -231,7 +231,7 @@ namespace MonogameEngine
             //    }
             //};
             //// Damage Left
-            //AnimationSequence DamageLeft = new StaticAnimationSequence
+            //AnimationSequence DamageLeft = new AnimationSequence
             //{
             //    Flipped = true,
             //    Frames = new List<AnimationFrame>()
@@ -242,7 +242,7 @@ namespace MonogameEngine
             //    }
             //};
             //// Damage Right
-            //AnimationSequence DamageRight = new StaticAnimationSequence
+            //AnimationSequence DamageRight = new AnimationSequence
             //{
             //    Frames = new List<AnimationFrame>()
             //    {
@@ -252,27 +252,25 @@ namespace MonogameEngine
             //    }
             //};
 
-            //AnimationSystem system = new AnimationSystem()
-            //{
-            //    IdleLeft = IdleLeft,
-            //    IdleRight = IdleRight,
-            //    WalkLeft = WalkLeft,
-            //    WalkRight = WalkRight,
-            //    WalkUp = WalkUp,
-            //    WalkDown = WalkDown,
-            //    AttackLeft = AttackLeft,
-            //    AttackRight = AttackRight,
-            //    CastLeft = CastLeft,
-            //    CastRight = CastRight,
-            //    DieLeft = DieLeft,
-            //    DieRight = DieRight,
-            //    DamageLeft = DamageLeft,
-            //    DamageRight = DamageRight,
-            //};
+            //AnimationSystem system = new AnimationSystem();
+            //system.Sequences["IdleLeft"] = IdleLeft;
+            //system.Sequences["IdleRight"] = IdleRight;
+            //system.Sequences["WalkLeft"] = WalkLeft;
+            //system.Sequences["WalkRight"] = WalkRight;
+            //system.Sequences["WalkUp"] = WalkUp;
+            //system.Sequences["WalkDown"] = WalkDown;
+            //system.Sequences["AttackLeft"] = AttackLeft;
+            //system.Sequences["AttackRight"] = AttackRight;
+            //system.Sequences["CastLeft"] = CastLeft;
+            //system.Sequences["CastRight"] = CastRight;
+            //system.Sequences["DieLeft"] = DieLeft;
+            //system.Sequences["DieRight"] = DieRight;
+            //system.Sequences["DamageLeft"] = DamageLeft;
+            //system.Sequences["DamageRight"] = DamageRight;
             //system.Offsets["Floor"] = new Vector2(0, -10);
-            //system.Offsets["Center"] = new Vector2(0, -170);
+            //system.Offsets["Center"] = new Vector2(-102, 70);
 
-            //string jsonString = JsonConvert.SerializeObject(system, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, Formatting = Formatting.Indented });
+            //string jsonString = JsonConvert.SerializeObject(system, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, Formatting = Formatting.Indented,  });
 
             //var a = "";
         }

@@ -1361,7 +1361,7 @@
 /processorParam:Quality=Best
 /build:sounds/sfx/quack.wav
 
-#begin sprites/characters/hero/attack_right/frame1.png
+#begin sprites/characters/hero/attack/frame1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1371,9 +1371,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/attack_right/frame1.png
+/build:sprites/characters/hero/attack/frame1.png
 
-#begin sprites/characters/hero/attack_right/frame2.png
+#begin sprites/characters/hero/attack/frame2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1383,9 +1383,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/attack_right/frame2.png
+/build:sprites/characters/hero/attack/frame2.png
 
-#begin sprites/characters/hero/attack_right/frame3.png
+#begin sprites/characters/hero/attack/frame3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1395,9 +1395,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/attack_right/frame3.png
+/build:sprites/characters/hero/attack/frame3.png
 
-#begin sprites/characters/hero/attack_right/frame4.png
+#begin sprites/characters/hero/attack/frame4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1407,9 +1407,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/attack_right/frame4.png
+/build:sprites/characters/hero/attack/frame4.png
 
-#begin sprites/characters/hero/attack_right/frame5.png
+#begin sprites/characters/hero/attack/frame5.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1419,9 +1419,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/attack_right/frame5.png
+/build:sprites/characters/hero/attack/frame5.png
 
-#begin sprites/characters/hero/attack_right/frame6.png
+#begin sprites/characters/hero/attack/frame6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1431,9 +1431,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/attack_right/frame6.png
+/build:sprites/characters/hero/attack/frame6.png
 
-#begin sprites/characters/hero/attack_right/frame7.png
+#begin sprites/characters/hero/attack/frame7.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1443,9 +1443,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/attack_right/frame7.png
+/build:sprites/characters/hero/attack/frame7.png
 
-#begin sprites/characters/hero/attack_right/frame8.png
+#begin sprites/characters/hero/attack/frame8.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1455,9 +1455,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/attack_right/frame8.png
+/build:sprites/characters/hero/attack/frame8.png
 
-#begin sprites/characters/hero/damage_right/frame1.png
+#begin sprites/characters/hero/damage/frame1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1467,9 +1467,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/damage_right/frame1.png
+/build:sprites/characters/hero/damage/frame1.png
 
-#begin sprites/characters/hero/damage_right/frame2.png
+#begin sprites/characters/hero/damage/frame2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1479,9 +1479,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/damage_right/frame2.png
+/build:sprites/characters/hero/damage/frame2.png
 
-#begin sprites/characters/hero/damage_right/frame3.png
+#begin sprites/characters/hero/damage/frame3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1491,9 +1491,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/damage_right/frame3.png
+/build:sprites/characters/hero/damage/frame3.png
 
-#begin sprites/characters/hero/death_right/frame1.png
+#begin sprites/characters/hero/death/frame1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1503,9 +1503,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/death_right/frame1.png
+/build:sprites/characters/hero/death/frame1.png
 
-#begin sprites/characters/hero/death_right/frame2.png
+#begin sprites/characters/hero/death/frame2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1515,9 +1515,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/death_right/frame2.png
+/build:sprites/characters/hero/death/frame2.png
 
-#begin sprites/characters/hero/death_right/frame3.png
+#begin sprites/characters/hero/death/frame3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1527,9 +1527,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/death_right/frame3.png
+/build:sprites/characters/hero/death/frame3.png
 
-#begin sprites/characters/hero/death_right/frame4.png
+#begin sprites/characters/hero/death/frame4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1539,9 +1539,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/death_right/frame4.png
+/build:sprites/characters/hero/death/frame4.png
 
-#begin sprites/characters/hero/death_right/frame5.png
+#begin sprites/characters/hero/death/frame5.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1551,9 +1551,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/death_right/frame5.png
+/build:sprites/characters/hero/death/frame5.png
 
-#begin sprites/characters/hero/death_right/frame6.png
+#begin sprites/characters/hero/death/frame6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1563,9 +1563,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/death_right/frame6.png
+/build:sprites/characters/hero/death/frame6.png
 
-#begin sprites/characters/hero/death_right/frame7.png
+#begin sprites/characters/hero/death/frame7.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1575,9 +1575,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/death_right/frame7.png
+/build:sprites/characters/hero/death/frame7.png
 
-#begin sprites/characters/hero/death_right/frame8.png
+#begin sprites/characters/hero/death/frame8.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1587,9 +1587,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/death_right/frame8.png
+/build:sprites/characters/hero/death/frame8.png
 
-#begin sprites/characters/hero/death_right/frame9.png
+#begin sprites/characters/hero/death/frame9.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1599,12 +1599,12 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/death_right/frame9.png
+/build:sprites/characters/hero/death/frame9.png
 
 #begin sprites/characters/hero/hero.json
 /copy:sprites/characters/hero/hero.json
 
-#begin sprites/characters/hero/idle_right/frame1.png
+#begin sprites/characters/hero/idle/frame1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1614,9 +1614,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/idle_right/frame1.png
+/build:sprites/characters/hero/idle/frame1.png
 
-#begin sprites/characters/hero/idle_right/frame2.png
+#begin sprites/characters/hero/idle/frame2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1626,9 +1626,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/idle_right/frame2.png
+/build:sprites/characters/hero/idle/frame2.png
 
-#begin sprites/characters/hero/idle_right/frame3.png
+#begin sprites/characters/hero/idle/frame3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1638,9 +1638,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/idle_right/frame3.png
+/build:sprites/characters/hero/idle/frame3.png
 
-#begin sprites/characters/hero/idle_right/frame4.png
+#begin sprites/characters/hero/idle/frame4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1650,9 +1650,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/idle_right/frame4.png
+/build:sprites/characters/hero/idle/frame4.png
 
-#begin sprites/characters/hero/walk_right/frame1.png
+#begin sprites/characters/hero/walk/frame1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1662,9 +1662,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/walk_right/frame1.png
+/build:sprites/characters/hero/walk/frame1.png
 
-#begin sprites/characters/hero/walk_right/frame2.png
+#begin sprites/characters/hero/walk/frame2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1674,9 +1674,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/walk_right/frame2.png
+/build:sprites/characters/hero/walk/frame2.png
 
-#begin sprites/characters/hero/walk_right/frame3.png
+#begin sprites/characters/hero/walk/frame3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1686,9 +1686,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/walk_right/frame3.png
+/build:sprites/characters/hero/walk/frame3.png
 
-#begin sprites/characters/hero/walk_right/frame4.png
+#begin sprites/characters/hero/walk/frame4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1698,9 +1698,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/walk_right/frame4.png
+/build:sprites/characters/hero/walk/frame4.png
 
-#begin sprites/characters/hero/walk_right/frame5.png
+#begin sprites/characters/hero/walk/frame5.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1710,9 +1710,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/walk_right/frame5.png
+/build:sprites/characters/hero/walk/frame5.png
 
-#begin sprites/characters/hero/walk_right/frame6.png
+#begin sprites/characters/hero/walk/frame6.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1722,9 +1722,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/walk_right/frame6.png
+/build:sprites/characters/hero/walk/frame6.png
 
-#begin sprites/characters/hero/walk_right/frame7.png
+#begin sprites/characters/hero/walk/frame7.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1734,9 +1734,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/walk_right/frame7.png
+/build:sprites/characters/hero/walk/frame7.png
 
-#begin sprites/characters/hero/walk_right/frame8.png
+#begin sprites/characters/hero/walk/frame8.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1746,7 +1746,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/characters/hero/walk_right/frame8.png
+/build:sprites/characters/hero/walk/frame8.png
 
 #begin sprites/core/cursors/book.png
 /importer:TextureImporter
