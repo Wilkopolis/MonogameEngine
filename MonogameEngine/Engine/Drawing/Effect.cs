@@ -12,6 +12,7 @@ namespace MonogameEngine
         public enum EffectType
         {
             Lighten,
+            Stroke,
             // Masks
             IncludeMask, ExcludeMask, KeyMask, RadialMask,
             // Blur
@@ -22,7 +23,7 @@ namespace MonogameEngine
         {
             public virtual EffectAgent AddEffect(EffectType type)
             {
-                if (this is CompoundElement || this is Button || this is Screen)
+                if (this is CompoundElement || this is Button)
                 {
                     Oops();
                     return null;
@@ -35,7 +36,7 @@ namespace MonogameEngine
                 {
                     case EffectType.Lighten:
                         result = new EffectAgent();
-                        result.Effect = Effects["ColorShift"];
+                        result.Effect = Effects["color_shift"];
                         result.Type = EffectAgentType.ColorShift;
                         result.Parameters["R"] = 1.25f;
                         result.Parameters["G"] = 1.25f;
@@ -126,7 +127,6 @@ namespace MonogameEngine
                     return null;
                 }
 
-
                 EffectAgent result = null;
                 int priority = 99;
 
@@ -162,6 +162,40 @@ namespace MonogameEngine
 
                 result.Priority = priority;
                 result.EffectType = blur;
+                this.EffectAgents.Add(result);
+
+                return null;
+            }
+
+            public virtual EffectAgent AddStroke(EffectType stroke, float radius, float r = 0, float g = 0, float b = 0, float a = 1)
+            {
+                if (this is CompoundElement || this is Button)
+                {
+                    Oops();
+                    return null;
+                }
+
+                EffectAgent result = null;
+                int priority = 10;
+
+                switch (stroke)
+                {
+                    case EffectType.Stroke:
+
+                        result = new EffectAgent();
+                        result.Type = EffectAgentType.Stroke;
+                        result.Parameters["Radius"] = radius;
+                        result.Parameters["R"] = r;
+                        result.Parameters["G"] = g;
+                        result.Parameters["B"] = b;
+                        result.Parameters["A"] = a;
+                        result.Effect = Effects["stroke"];
+
+                        break;
+                }
+
+                result.Priority = priority;
+                result.EffectType = stroke;
                 this.EffectAgents.Add(result);
 
                 return null;

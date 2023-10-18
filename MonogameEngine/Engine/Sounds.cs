@@ -81,10 +81,10 @@ namespace MonogameEngine
 
             public void Load()
             {
-                if (content == null)
-                {
-                    content = new Microsoft.Xna.Framework.Content.ContentManager(_content.ServiceProvider);
-                }
+                //if (content == null)
+                //{
+                //    content = new Microsoft.Xna.Framework.Content.ContentManager(_content.ServiceProvider);
+                //}
 
                 if (!this.Loaded)
                 {

@@ -299,12 +299,6 @@ namespace MonogameEngine
 
             public virtual Vector2 GetLocalCenter()
             {
-                Vector2 Pos = this.Position;
-                return new Vector2(Pos.X + this.Width / 2f, Pos.Y + this.Height / 2f);
-            }
-
-            public virtual Vector2 GetRelativeCenter()
-            {
                 return new Vector2(this.Width / 2f, this.Height / 2f);
             }
 

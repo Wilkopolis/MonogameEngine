@@ -26,10 +26,10 @@ namespace MonogameEngine
 
             public void Load()
             {
-                if (content == null)
-                {
-                    content = new Microsoft.Xna.Framework.Content.ContentManager(_content.ServiceProvider);
-                }
+                //if (content == null)
+                //{
+                //    content = new Microsoft.Xna.Framework.Content.ContentManager(_content.ServiceProvider);
+                //}
 
                 if (!this.Loaded)
                 {
@@ -75,7 +75,7 @@ namespace MonogameEngine
             //LoadVids();
 
             // set up all our texture definitions
-            DefineTextures();
+            LoadTextures();
 
             List<string> staticAssets = new List<string>
             {
@@ -88,21 +88,6 @@ namespace MonogameEngine
             // just load everything for now - very easy to adjust this later!
             foreach (string key in Textures.Keys)
                 Textures[key].Load();
-        }
-
-        void LoadFonts()
-        {
-            CreateFonts();
-
-            // right now we're going to load everything
-            // eventually we will whittle it down to just the essentials
-            foreach (Dictionary<int, Font> dictionary in Fonts.Library.Values)
-            {
-                foreach (Font font in dictionary.Values)
-                {
-                    font.Load();
-                }
-            }
         }
 
         void LoadEffects()
@@ -153,7 +138,7 @@ namespace MonogameEngine
             }
         }
 
-        void DefineTextures()
+        void LoadTextures()
         {
             string path = Directory.GetCurrentDirectory();
             string newPath = Path.GetFullPath(Path.Combine(path, @"..\..\..\Content\sprites\"));

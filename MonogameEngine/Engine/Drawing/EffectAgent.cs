@@ -17,7 +17,8 @@ namespace MonogameEngine
             RadialMask,
             Blur,
             Pixelate,
-            Noise
+            Noise,
+            Stroke
         };
 
         public class EffectAgent
@@ -151,6 +152,16 @@ namespace MonogameEngine
                     case EffectAgentType.Noise:
 
                         this.Effect.Parameters["noiseAmount"].SetValue(this.Parameters["Amount"]);
+
+                        break;
+
+                    case EffectAgentType.Stroke:
+
+                        this.Effect.Parameters["r"].SetValue(this.Parameters["R"]);
+                        this.Effect.Parameters["g"].SetValue(this.Parameters["G"]);
+                        this.Effect.Parameters["b"].SetValue(this.Parameters["B"]);
+                        this.Effect.Parameters["a"].SetValue(this.Parameters["A"]);
+                        this.Effect.Parameters["outlineSize"].SetValue(this.Parameters["Radius"]);
 
                         break;
                 }

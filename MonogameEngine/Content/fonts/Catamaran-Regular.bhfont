@@ -1,0 +1,17 @@
+{
+	"path":".\\Catamaran-Regular.ttf",
+	"ranges":[
+		{
+			"start":" ",
+			"end":"0xFF"
+		},
+		{
+			"start":"←",
+			"end":"↙"
+		},
+		{
+			"start":"0x2000",
+			"end":"0x200f"
+		}
+	]
+}

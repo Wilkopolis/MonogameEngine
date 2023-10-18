@@ -32,25 +32,6 @@ namespace MonogameEngine
             LOG("oops");
         }
 
-        public static Button DebugButton(int w, int h, string msg, Color color, Action clickHandler)
-        {
-            Button result = new Button();
-
-            Box bg = new Box(w, h, color);
-            result.Add(bg);
-
-            Text text = new Text(text: msg, Fonts.Library[FontFamily.Merriweather][16]);
-            text.Center(bg);
-            result.Add(text);
-
-            result.ClickHandler = delegate { 
-                clickHandler();
-            };
-            result.Resize();
-
-            return result;
-        }
-
         public class ElementProp
         {
             public bool Interactive = false;
@@ -161,7 +142,7 @@ namespace MonogameEngine
         //    }
         //}
 
-        public static void RemoveAllElements()
+        public void RemoveAllElements()
         {
             foreach (Screen screen in Screens.Values)
                 screen.Unload();

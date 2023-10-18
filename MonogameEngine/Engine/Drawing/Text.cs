@@ -8,6 +8,9 @@ using System.IO;
 using System.Data;
 using System.Reflection;
 using static MonogameEngine.MonogameEngine;
+using BracketHouse.FontExtension;
+using System.Xml.Linq;
+using System.Security.AccessControl;
 
 #pragma warning disable IDE0017 // Simplify object initialization
 #pragma warning disable IDE0028 // 
@@ -20,12 +23,15 @@ namespace MonogameEngine
         {
             public string Text = "";
             public Font Font;
+            public int FontSize;
+            public float StrokeSize = 0;
             public Vector2 Offset = Vector2.Zero;
 
-            public Phrase(string text, Font font) 
+            public Phrase(string text, Font font, int fontSize) 
             {
                 this.Text = text;
                 this.Font = font;
+                this.FontSize = fontSize;
             }
         }
 
@@ -56,16 +62,21 @@ namespace MonogameEngine
             {
                 Phrase phrase = paragraph.Phrases[i];
 
-                string[] words = phrase.Text.Split(' ');
-                for (int j = 0; j < words.Length; j++)
+                List<string> words = phrase.Text.Split(' ').ToList();
+                if (phrase.Text.StartsWith(" "))
+                    words.Insert(0, " ");
+
+                for (int j = 0; j < words.Count; j++)
                 {
                     string word = words[j];
+                    if (word == "")
+                        continue;
 
                     // add space if we arent the last word of the last phrase
-                    if (j != words.Length - 1)
+                    if (j != words.Count - 1 && word != " ")
                         word += ' ';
 
-                    Element text = new Text(x, y, word, phrase.Font);
+                    Element text = new Text(x, y, word, phrase.Font, phrase.FontSize) { StrokeSize = phrase.StrokeSize };
                     text.Position += phrase.Offset;
                     x += text.Width;
 
@@ -104,211 +115,257 @@ namespace MonogameEngine
             return result;
         }
 
-        public static class FontFamily
+        void LoadFonts()
         {
-            public static string K2D = "K2D Medium";
-            public static string Acme = "Acme";
-            public static string OpenSans = "Open Sans SemiBold";
-            public static string Catamaran = "Catamaran-Regular";
-            public static string RobotoSlab = "RobotoSlabRegular";
-            public static string RobotoMono = "Roboto Mono";
-            public static string Bahnschrift = "Bahnschrift";
-            public static string Merriweather = "Merriweather";
-        }
+            string path = Directory.GetCurrentDirectory();
+            string newPath = Path.GetFullPath(Path.Combine(path, @"..\..\..\Content\fonts\"));
 
-        public static List<int> FontSizes = new List<int>
-        {
-            8, 10, 12, 14, 16, 18, 20, 22, 24, 28, 32, 36, 40, 44, 48, 54, 60, 64, 72, 80, 90, 100, 120
-        };
+            List<DirectoryInfo> directories = new List<DirectoryInfo>();
+            List<FileInfo> files = new List<FileInfo>();
 
-        static void CreateFonts()
-        {
-            bool createFonts = true;
-            if (createFonts)
+            Stack<DirectoryInfo> tempFolders = new Stack<DirectoryInfo>();
+            tempFolders.Push(new DirectoryInfo(newPath));
+
+            DirectoryInfo currentFolder = tempFolders.Pop();
+
+            // populate MediaFileInfo with all files we find in the video directory
+            while (true)
             {
-                string path = Directory.GetCurrentDirectory();
-                string newPath = Path.GetFullPath(Path.Combine(path, @"..\..\..\Content\fonts\"));
-
-                Type t = typeof(FontFamily);
-                FieldInfo[] fields = t.GetFields(BindingFlags.Static | BindingFlags.Public);
-
-                List<string> fontFamilies = new List<string>();
-
-                foreach (FieldInfo fieldInfo in fields)
-                    fontFamilies.Add((string)fieldInfo.GetValue(null));
-
-                foreach (string family in fontFamilies)
+                // add to the fileSet
+                foreach (FileInfo f in currentFolder.GetFiles())
                 {
-                    Fonts.Library[family] = new Dictionary<int, Font>();
-
-                    foreach (int size in FontSizes)
-                    {
-                        // create the file name path
-                        string fullPath = newPath + family + size + ".spritefont";
-                        
-                        // check for existing of file
-                        if (!File.Exists(fullPath))
-                        {
-                            string contents = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n";
-                            contents += "<XnaContent xmlns:Graphics=\"Microsoft.Xna.Framework.Content.Pipeline.Graphics\">\r\n";
-                            contents += "<Asset Type=\"Graphics:FontDescription\">\r\n";
-                            contents += "<FontName>" + family + "</FontName>\r\n";
-                            contents += "<Size>" + size + "</Size>\r\n";
-                            contents += "<Spacing>0</Spacing>\r\n";
-                            contents += "<UseKerning>true</UseKerning>\r\n";
-                            contents += "<Style>Regular</Style>\r\n";
-                            contents += "<CharacterRegions>\r\n";
-                            contents += "<CharacterRegion>\r\n";
-                            contents += "<Start>&#32;</Start>\r\n";
-                            contents += "<End>&#126;</End>\r\n";
-                            contents += "</CharacterRegion>\r\n";
-                            contents += "</CharacterRegions>\r\n";
-                            contents += "</Asset>\r\n";
-                            contents += "</XnaContent>";
-
-                            File.WriteAllText(fullPath, contents);
-                        }
-
-                        Fonts.Library[family][size] = new Font("fonts\\" + family + size) { Family = family };
-                    }
+                    int lastDot = f.Name.LastIndexOf('.');
+                    string fileExtension = f.Name.Substring(lastDot + 1, f.Name.Length - lastDot - 1).ToLower();
+                    if (fileExtension == "bhfont")
+                        files.Add(f);
                 }
-            }
-            else
-            {
-                // grep or something to get only the fonts we actually use
-                List<string> definedFonts = new List<string>
-                {
-                    "Acme8", "Acme10"
-                };
 
-                foreach (string path in definedFonts)
+                // add to the folderSet
+                foreach (DirectoryInfo d in currentFolder.GetDirectories())
+                    tempFolders.Push(d);
+
+                if (tempFolders.Count == 0)
+                    break;
+
+                currentFolder = tempFolders.Pop();
+            }
+
+            foreach (FileInfo f in files)
+            {
+                int indx = f.FullName.IndexOf("Content") + 8;
+                int keyIndx = f.FullName.IndexOf("Content") + 14;
+                int lastDot = f.Name.LastIndexOf('.');
+                int fileExtension = f.Name.Substring(lastDot + 1, f.Name.Length - lastDot - 1).Length + 1;
+                string localPath = f.FullName.Substring(indx, f.FullName.Length - indx - fileExtension);
+                string key = f.FullName.Substring(keyIndx, f.FullName.Length - keyIndx - fileExtension);
+                key = key.Replace(@"\", "/");
+
+                // translate the file name to our nice name
+                string fieldName = Fonts.FontDefintions[key];
+
+                // create the text renderer for that font
+                FieldFont fieldFont = content.Load<FieldFont>(localPath);
+                Font font = new Font(fieldFont, new TextRenderer(fieldFont, graphics, Effects["FieldFontEffect"]));
+                foreach (FieldInfo fieldInfo in typeof(Fonts).GetFields())
                 {
-                    // get the name and size from some string parsing
-                    string family = "";
-                    int size = 14;
-                    Fonts.Library[family][size] = new Font("fonts\\" + family + size);
+                    if (fieldInfo.Name == fieldName)
+                    {
+                        fieldInfo.SetValue(fieldInfo, font);
+                    }
                 }
             }
         }
 
         public class Font
         {
-            private string Path;
-            public SpriteFont SpriteFont;
-            public Color Color = Color.White;
-            public int VerticleSpacing = 0;
-            public string Family;
+            public FieldFont FieldFont;
+            public TextRenderer TextRenderer;
+            public Color Color = Col(143, 140, 140);
 
-            public Font(string path)
+            public Font(FieldFont fieldFont, TextRenderer textRenderer)
             {
-                this.Path = path;
-            }
-
-            public void Load()
-            {
-                this.SpriteFont = content.Load<SpriteFont>(this.Path);
+                this.FieldFont = fieldFont;
+                this.TextRenderer = textRenderer;
             }
 
             public Font Hue(Color color)
             {
-                Font result = new Font(this.Path);
-                result.SpriteFont = this.SpriteFont;
-                result.Color = color;
-                result.VerticleSpacing = this.VerticleSpacing;
-                return result;
+                return new Font(this.FieldFont, this.TextRenderer) { Color = color };
             }
         }
 
         public static class Fonts
         {
-            public static Dictionary<string, Dictionary<int, Font>> Library = new Dictionary<string, Dictionary<int, Font>>();
+            public static Font K2D;
+            public static Font Acme;
+            public static Font Arial;
+            public static Font OpenSans;
+            public static Font Catamaran;
+            public static Font RobotoSlab;
+            public static Font RobotoMono;
+            public static Font Bahnschrift;
+            public static Font Merriweather;
+
+            public static Dictionary<string, string> FontDefintions = new Dictionary<string, string>
+            {
+                { "K2D Medium", "K2D" },
+                { "Acme", "Acme" },
+                { "Arial", "Arial" },
+                { "Open Sans SemiBold", "OpenSans" },
+                { "Catamaran-Regular", "Catamaran" },
+                { "RobotoSlabRegular", "RobotoSlab" },
+                { "RobotoMono", "RobotoMono" },
+                { "Bahnschrift", "Bahnschrift" },
+                { "Merriweather", "Merriweather" }
+            };
         }
 
         public class Text : Element
         {
-            public Font _Font;
-            public SpriteFont Font;
+            public Font Font;
+            public int FontSize = 12;
+
+            public Color StrokeColor = Color.Black;
+            // 0 to 1 of how much stroke to draw
+            public float StrokeSize = 0;
 
             public string String = "";
-            
-            public Text(string text = "", Font font = null, float x = 0, float y = 0, float zIndex = 1f)
+
+            public static RenderTarget2D TextCanvas;
+
+            public Text(string text = "", Font font = null, int fontSize = 12, float x = 0, float y = 0, float zIndex = 1f)
             {
                 this.Position = new Vector2(x, y);
                 this.String = text;
-                this.Font = font.SpriteFont;
-                this._Font = font;
+                this.Font = font;
+                this.FontSize = fontSize;
                 this.Color = font.Color;
                 this.zIndex = zIndex;
 
                 this.BlendState = BlendState.AlphaBlend;
 
                 this.Resize();
+
+                this.RenderPeriod = -1;
             }
 
-            public Text(float x = 0, float y = 0, string text = "", Font font = null, float zIndex = 1f)
+            public Text(float x = 0, float y = 0, string text = "", Font font = null, int fontSize = 12, float zIndex = 1f)
             {
                 this.Position = new Vector2(x, y);
                 this.String = text;
-                this.Font = font.SpriteFont;
-                this._Font = font;
+                this.Font = font;
+                this.FontSize = fontSize;
                 this.Color = font.Color;
                 this.zIndex = zIndex;
+
+                this.RenderPeriod = -1;
 
                 this.BlendState = BlendState.AlphaBlend;
 
                 this.Resize();
+
+                this.RenderPeriod = -1;
             }
 
             public override void Fit(int dimension, bool expand = false)
             {
-                List<int> fontSizes = new List<int>(FontSizes);
-
-                // set us to max size
                 if (expand)
                 {
-                    int size = fontSizes[fontSizes.Count - 1];
-                    fontSizes.Remove(size);
+                    // bring it up to the limit
+                    while (this.Width <= dimension)
+                    {
+                        this.FontSize++;
+                        this.Resize();
 
-                    this._Font = Fonts.Library[this._Font.Family][size];
-                    this.Font = this._Font.SpriteFont;
-                    this.Resize();
+                        // if we crossed the line, go back one
+                        if (this.Width > dimension)
+                        {
+                            this.FontSize--;
+                            this.Resize();
+                        }
+                    }
                 }
-
-                // then try to fit us
-                while (this.Width > dimension && fontSizes.Count > 0)
+                else
                 {
-                    int size = fontSizes[fontSizes.Count - 1];
-                    fontSizes.Remove(size);
-
-                    this._Font = Fonts.Library[this._Font.Family][size];
-                    this.Font = this._Font.SpriteFont;
-                    this.Resize();
+                    while (this.Width > dimension)
+                    {
+                        this.FontSize--;
+                        this.Resize();
+                    }
                 }
             }
 
             public Text Clone()
             {
-                Text result = new Text(this.String, this._Font, this.Position.X, this.Position.Y, this.zIndex);
+                Text result = new Text(this.String, this.Font, this.FontSize, this.Position.X, this.Position.Y, this.zIndex);
                 return result;
             }
 
-            public override void Render(bool cursor = false)
+            public override void Resize()
             {
-                if (MsEllapsed - this.LastRenderTime < this.RenderPeriod)
-                    return;
+                Vector2 dimensions = this.Font.FieldFont.MeasureString(this.String, false) * this.FontSize;
+                this.Width = (int)Math.Ceiling(dimensions.X);
+                this.Height = (int)Math.Ceiling(dimensions.Y);
+            }
 
-                if (this.String == "" || this.EffectAgents.Count < 1)
+            public override void Render(bool direct = false)
+            {
+                if (this.Texture != null && !direct)
                 {
-                    this.RenderTarget2D = null;
-                    this.Canvas = null;
-                    return;
+                    if (this.RenderPeriod == -1)
+                        return;
+
+                    if (MsEllapsed - this.LastRenderTime < this.RenderPeriod)
+                        return;
                 }
 
+                this.Unload();
+
+                // render our the text to a texture
+                graphics.SetRenderTarget(Text.TextCanvas);
+                graphics.Clear(this.ClearColor);
+
+                this.Font.TextRenderer.ResetLayout();
+                this.Font.TextRenderer.OptimizeForTinyText = this.FontSize <= 20;
+
+                if (this.StrokeSize > 0)
+                {
+                    this.Font.TextRenderer.StrokeSize = this.StrokeSize * 1.5f * this.FontSize / 64.0f;
+                    this.Font.TextRenderer.LayoutText(this.String, Vector2.Zero, this.Color, this.StrokeColor, this.FontSize, 0, Vector2.Zero);
+                    this.Font.TextRenderer.RenderStrokedText();
+                }
+                else
+                {
+                    this.Font.TextRenderer.SimpleLayoutText(this.String, Vector2.Zero, this.Color, Color.Black, this.FontSize);
+                    this.Font.TextRenderer.RenderText();
+                }
+
+                spriteBatch.Begin(SpriteSortMode.Immediate, this.BlendState);
+                this.Font.TextRenderer.DrawSprites(spriteBatch);
+                spriteBatch.End();
+
+                // make us a little fatter if we are stroking
+                int Border = 0;
+                if (this.EffectAgents.Any(effect => effect.EffectType == EffectType.Stroke))
+                    Border = 10;
+
+                this.Texture = new RenderTarget2D(graphics, this.Width + 2 * Border, this.Height + 2 * Border);
+
+                graphics.SetRenderTarget((RenderTarget2D)this.Texture);
+                graphics.Clear(this.ClearColor);
+
+                spriteBatch.Begin(SpriteSortMode.Immediate, this.BlendState);
+                spriteBatch.Draw(Text.TextCanvas, new Vector2(Border, Border), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+                spriteBatch.End();
+
+                graphics.SetRenderTarget(null);
+
+                // do the shader stuff
                 if (this.EffectAgents.Count > 10)
                     Oops();
 
-                int adjW = (int)Math.Round(this.Width / this.Scale) + 40;
-                int adjH = (int)Math.Round(this.Height / this.Scale) + 40;
+                int adjW = this.Texture.Width;
+                int adjH = this.Texture.Height;
                 if (this.RenderTarget2D == null || this.RenderTarget2D.Width != adjW || this.RenderTarget2D.Height != adjH)
                 {
                     if (this.RenderTarget2D != null)
@@ -320,60 +377,59 @@ namespace MonogameEngine
                     this.RenderTarget2D = new RenderTarget2D(graphics, adjW, adjH);
                 }
 
-                // draw the text out first to a texture
+                // draw the texture out
                 graphics.SetRenderTarget(this.RenderTarget2D);
 
                 graphics.Clear(this.ClearColor);
 
                 spriteBatch.Begin(SpriteSortMode.Immediate, this.BlendState);
 
-                spriteBatch.DrawString(this.Font, this.String, new Vector2(20, 20), this.Color * this.Alpha, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 1f);
+                spriteBatch.Draw(this.Texture, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
 
-                spriteBatch.End();
-
-                spriteBatch.Begin(SpriteSortMode.Immediate, this.BlendState);
-
-                // make a second render target
-                if (this.Canvas == null || this.Canvas.Width != adjW || this.Canvas.Height != adjH)
+                if (this.EffectAgents.Count > 0)
                 {
-                    if (this.Canvas != null)
+                    // make a second render target
+                    if (this.Canvas == null || this.Canvas.Width != adjW || this.Canvas.Height != adjH)
                     {
-                        this.Canvas.Dispose();
-                        this.Canvas = null;
+                        if (this.Canvas != null)
+                        {
+                            this.Canvas.Dispose();
+                            this.Canvas = null;
+                        }
+
+                        this.Canvas = new RenderTarget2D(graphics, adjW, adjH);
                     }
 
-                    this.Canvas = new RenderTarget2D(graphics, adjW, adjH);
-                }
-
-                this.EffectAgents.Sort(delegate (EffectAgent a, EffectAgent b)
-                {
-                    return a.Priority.CompareTo(b.Priority);
-                });
-
-                // draw it per each effect
-                for (int i = 0; i < this.EffectAgents.Count; i++)
-                {
-                    if (i % 2 == 1)
+                    this.EffectAgents.Sort(delegate (EffectAgent a, EffectAgent b)
                     {
-                        graphics.SetRenderTarget(this.RenderTarget2D);
-                        graphics.Clear(this.ClearColor);
+                        return a.Priority.CompareTo(b.Priority);
+                    });
 
-                        EffectAgent effect = this.EffectAgents[i];
-
-                        effect.Apply(this);
-
-                        spriteBatch.Draw(this.Canvas, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
-                    }
-                    else
+                    // draw it per each effect
+                    for (int i = 0; i < this.EffectAgents.Count; i++)
                     {
-                        graphics.SetRenderTarget(this.Canvas);
-                        graphics.Clear(this.ClearColor);
+                        if (i % 2 == 1)
+                        {
+                            graphics.SetRenderTarget(this.RenderTarget2D);
+                            graphics.Clear(this.ClearColor);
 
-                        EffectAgent effect = this.EffectAgents[i];
+                            EffectAgent effect = this.EffectAgents[i];
 
-                        effect.Apply(this);
+                            effect.Apply(this);
 
-                        spriteBatch.Draw(this.RenderTarget2D, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+                            spriteBatch.Draw(this.Canvas, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+                        }
+                        else
+                        {
+                            graphics.SetRenderTarget(this.Canvas);
+                            graphics.Clear(this.ClearColor);
+
+                            EffectAgent effect = this.EffectAgents[i];
+
+                            effect.Apply(this);
+
+                            spriteBatch.Draw(this.RenderTarget2D, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+                        }
                     }
                 }
 
@@ -391,9 +447,12 @@ namespace MonogameEngine
                     this.RenderTarget2D.Dispose();
                 if (this.Canvas != null)
                     this.Canvas.Dispose();
+                if (this.Texture != null)
+                    this.Texture.Dispose();
 
                 this.RenderTarget2D = null;
                 this.Canvas = null;
+                this.Texture = null;
             }
 
             public override void Draw()
@@ -401,39 +460,18 @@ namespace MonogameEngine
                 if (this.String == "")
                     return;
 
-                if (this.IsVisible())
-                {
-                    spriteBatch.Begin(SpriteSortMode.Immediate, this.BlendState);
+                if (!this.IsVisible())
+                    return;
 
-                    Vector2 position = this.ScreenPos();
+                Vector2 pos = this.ScreenPos();
 
-                    // if we only have 1 effect, spare the render target
-                    if (this.RenderTarget2D != null)
-                        spriteBatch.Draw(this.GetTexture(), position - new Vector2(20, 20), null, Color.White * this.Alpha, this.Rotation, Vector2.Zero, this.Scale, SpriteEffects.None, 1f);
-                    else
-                        spriteBatch.DrawString(this.Font, this.String, position, this.Color * this.Alpha, this.Rotation, Vector2.Zero, this.Scale, SpriteEffects.None, 1f);
+                // due to stroking, we make the texture bigger and draw it offset. Correct it here
+                if (this.EffectAgents.Any(effect => effect.EffectType == EffectType.Stroke))
+                    pos -= new Vector2(10, 10);
 
-                    spriteBatch.End();
-                }
-            }
-
-            public override void Resize()
-            {
-                this.Width = (int)Math.Round(this.Font.MeasureString(this.String).X * this.Scale);
-                
-                // maybe once they fix this !
-                if (this._Font.VerticleSpacing != 0)
-                    this.Height = this._Font.VerticleSpacing;
-                else
-                    this.Height = (int)Math.Round(this.Font.MeasureString(this.String).Y * this.Scale);
-            }
-
-            public override Texture2D GetTexture()
-            {
-                if (this.EffectAgents.Count % 2 == 1)
-                    return this.Canvas;
-                else
-                    return this.RenderTarget2D;
+                spriteBatch.Begin(SpriteSortMode.Immediate, this.BlendState);
+                spriteBatch.Draw(this.GetTexture(), pos, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+                spriteBatch.End();
             }
         }
     }

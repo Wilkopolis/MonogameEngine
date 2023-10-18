@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Globalization;
+using BracketHouse.FontExtension;
 
 namespace MonogameEngine
 {
@@ -13,9 +14,8 @@ namespace MonogameEngine
     {
         public static GraphicsDevice graphics;
         public static SpriteBatch spriteBatch;
-        GraphicsDeviceManager graphicsManager;
+        public static GraphicsDeviceManager graphicsManager;
         public static ContentManager content;
-        public static ContentManager _content;
 
         public static GameTime Time = new GameTime();
         public static long MsEllapsed = 0;
@@ -26,14 +26,15 @@ namespace MonogameEngine
         public MonogameEngine()
         {
             graphicsManager = new GraphicsDeviceManager(this);
-            _content = Content;
-            content = new ContentManager(_content.ServiceProvider);
+            content = new ContentManager(Content.ServiceProvider);
             content.RootDirectory = "Content";
         }
 
         protected override void Initialize()
         {
             graphics = GraphicsDevice;
+            TextRenderer.Initialize(graphicsManager, Window, content);
+            Text.TextCanvas = new RenderTarget2D(graphics, 1920, 1080);
 
             this.Activated += ActivateMyGame;
             this.Deactivated += DeactivateMyGame;
@@ -111,6 +112,8 @@ namespace MonogameEngine
 
         protected override void Draw(GameTime gameTime)
         {
+            float totalTime = (float)gameTime.TotalGameTime.TotalSeconds;
+
             List<Screen> screens = Screens.Values.ToList();
             screens.OrderBy(@screen => @screen.zIndex);
 

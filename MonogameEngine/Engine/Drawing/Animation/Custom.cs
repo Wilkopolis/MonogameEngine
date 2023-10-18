@@ -11,15 +11,12 @@ namespace MonogameEngine
             
             public double LastRun = 0;
 
-            public CustomAnimation(Element target, int duration, Action<float> tick = null, Action callback = null)
+            public CustomAnimation(int duration, Action<float> tick = null, Action callback = null)
             {
-                this.Target = target;
                 this.Duration = duration;
                 this.TickHandler = tick;
 
                 this.Callback = callback;
-
-                this.Target.Animations.Add(this);
 
                 this.Begin();
             }
@@ -57,7 +54,6 @@ namespace MonogameEngine
             {
                 this.Over = true;
                 this.Running = false;
-                this.Target.Animations.Remove(this);
             }
         }
     }

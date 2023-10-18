@@ -73,11 +73,11 @@ namespace MonogameEngine
 
             public override void Draw()
             {
-                if (!this.Visible)
+                if (!this.IsVisible())
                     return;
 
                 spriteBatch.Begin(SpriteSortMode.Immediate, this.BlendState);
-                spriteBatch.Draw(this.Texture, this.ScreenPos(), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+                spriteBatch.Draw(this.GetTexture(), this.ScreenPos(), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
                 spriteBatch.End();
             }
 
@@ -90,6 +90,22 @@ namespace MonogameEngine
             {
                 foreach (Element element in Elements.Values)
                     Remove(element);
+
+                this.Dispose();
+            }
+
+            public void Dispose()
+            {
+                if (this.RenderTarget2D != null)
+                    this.RenderTarget2D.Dispose();
+                if (this.Canvas != null)
+                    this.Canvas.Dispose();
+                if (this.Texture != null)
+                    this.Texture.Dispose();
+
+                this.RenderTarget2D = null;
+                this.Canvas = null;
+                this.Texture = null;
             }
 
             public void Update(float deltaTime)
@@ -133,12 +149,22 @@ namespace MonogameEngine
                 // if we are called to render, then render everything out
                 if (!direct)
                 {
+                    if (!this.IsVisible())
+                        return;
+
                     if (this.RenderPeriod == -1)
                         return;
 
                     if (MsEllapsed - this.LastRenderTime < this.RenderPeriod)
                         return;
                 }
+
+                if (this.RenderTarget2D != null)
+                    this.RenderTarget2D.Dispose();
+                if (this.Canvas != null)
+                    this.Canvas.Dispose();
+                this.RenderTarget2D = null;
+                this.Canvas = null;
 
                 // render out all our elements
                 foreach (Element element in this.Elements.Values)
@@ -157,6 +183,89 @@ namespace MonogameEngine
                     element.Draw();
 
                 graphics.SetRenderTarget(null);
+
+                // dont do any extra rendering if we don't have any effects
+                if (this.EffectAgents.Count == 0)
+                    return;
+                
+                if (this.EffectAgents.Count > 10)
+                    Oops();
+
+                int adjW = (int)Math.Round(this.Width / this.Scale);
+                int adjH = (int)Math.Round(this.Height / this.Scale);
+                if (this.RenderTarget2D == null || this.RenderTarget2D.Width != adjW || this.RenderTarget2D.Height != adjH)
+                {
+                    if (this.RenderTarget2D != null)
+                    {
+                        this.RenderTarget2D.Dispose();
+                        this.RenderTarget2D = null;
+                    }
+
+                    this.RenderTarget2D = new RenderTarget2D(graphics, adjW, adjH);
+                }
+
+                // draw the texture out
+                graphics.SetRenderTarget(this.RenderTarget2D);
+
+                graphics.Clear(this.ClearColor);
+
+                spriteBatch.Begin(SpriteSortMode.Immediate, this.BlendState);
+
+                spriteBatch.Draw(this.Texture, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+
+                if (this.EffectAgents.Count > 0)
+                {
+                    // make a second render target
+                    if (this.Canvas == null || this.Canvas.Width != adjW || this.Canvas.Height != adjH)
+                    {
+                        if (this.Canvas != null)
+                        {
+                            this.Canvas.Dispose();
+                            this.Canvas = null;
+                        }
+
+                        this.Canvas = new RenderTarget2D(graphics, adjW, adjH);
+                    }
+
+                    this.EffectAgents.Sort(delegate (EffectAgent a, EffectAgent b)
+                    {
+                        return a.Priority.CompareTo(b.Priority);
+                    });
+
+                    // draw it per each effect
+                    for (int i = 0; i < this.EffectAgents.Count; i++)
+                    {
+                        if (i % 2 == 1)
+                        {
+                            graphics.SetRenderTarget(this.RenderTarget2D);
+                            graphics.Clear(this.ClearColor);
+
+                            EffectAgent effect = this.EffectAgents[i];
+
+                            effect.Apply(this);
+
+                            spriteBatch.Draw(this.Canvas, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+                        }
+                        else
+                        {
+                            graphics.SetRenderTarget(this.Canvas);
+                            graphics.Clear(this.ClearColor);
+
+                            EffectAgent effect = this.EffectAgents[i];
+
+                            effect.Apply(this);
+
+                            spriteBatch.Draw(this.RenderTarget2D, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+                        }
+                    }
+                }
+
+                spriteBatch.End();
+
+                // set our screen back to normal
+                graphics.SetRenderTarget(null);
+
+                this.LastRenderTime = MsEllapsed;
             }
 
             public void Remove(Element element)
