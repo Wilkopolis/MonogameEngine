@@ -407,7 +407,6 @@ namespace MonogameEngine
             desc1.Position = new Vector2(250, 700);
             exampleScreen.Add("description1", desc1);
 
-
             List<Phrase> p2 = new List<Phrase>();
             p2.Add(new Phrase("Text ", Fonts.RobotoMono.Hue(Col(70, 140, 100)), 20));
             p2.Add(new Phrase("text1 = ", Fonts.RobotoMono.Hue(Col(120, 122, 140)), 20));
