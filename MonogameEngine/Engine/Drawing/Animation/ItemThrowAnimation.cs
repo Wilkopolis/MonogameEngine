@@ -15,7 +15,7 @@ namespace MonogameEngine
             public float Duration = 0;
             public double LastRun = 0;
             // scales 
-            public float Height = -.05f;
+            public float Height = -300f;
             public float RotStep = -.4f;
 
             public ItemThrowAnimation(Element target, Element victim, Action handler = null)

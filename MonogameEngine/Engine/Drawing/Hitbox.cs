@@ -42,7 +42,7 @@ namespace MonogameEngine
                 {
                     case HitBoxType.Texture:
 
-                        Vector2 pos = this.Pos();
+                        Vector2 pos = this.AbsPos();
 
                         Vector2 p = new Vector2(pos.X, pos.Y);
 

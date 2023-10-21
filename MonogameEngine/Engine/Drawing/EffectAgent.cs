@@ -11,14 +11,18 @@ namespace MonogameEngine
     public partial class MonogameEngine
     {
         public enum EffectAgentType {
+            Color,
             ColorShift,
+            ColorSmoke,
             RectangleMask,
             KeyMask,
             RadialMask,
             Blur,
             Pixelate,
             Noise,
-            Stroke
+            Stroke,
+            Fog,
+            ChestLootBeam
         };
 
         public class EffectAgent
@@ -81,6 +85,29 @@ namespace MonogameEngine
 
                         break;
 
+                    case EffectAgentType.Color:
+
+                        this.Effect.Parameters["R"].SetValue(this.Parameters["R"]);
+                        this.Effect.Parameters["G"].SetValue(this.Parameters["G"]);
+                        this.Effect.Parameters["B"].SetValue(this.Parameters["B"]);
+                        this.Effect.Parameters["forceAlpha"].SetValue(this.Parameters["forceAlpha"]);
+
+                        break;
+
+                    case EffectAgentType.ColorSmoke:
+
+                        this.Effect.Parameters["time"].SetValue(MsEllapsed);
+                        this.Effect.Parameters["R"].SetValue(this.Parameters["R"]);
+                        this.Effect.Parameters["G"].SetValue(this.Parameters["G"]);
+                        this.Effect.Parameters["B"].SetValue(this.Parameters["B"]);
+                        this.Effect.Parameters["A"].SetValue(1);
+                        this.Effect.Parameters["w"].SetValue(element.Width);
+                        this.Effect.Parameters["h"].SetValue(element.Height);
+                        this.Effect.Parameters["radius"].SetValue(this.Parameters["Radius"]);
+                        this.Effect.Parameters["power"].SetValue(this.Parameters["Power"]);
+
+                        break;
+
                     case EffectAgentType.RectangleMask:
 
                         // apply our offsets to X and Y
@@ -93,8 +120,8 @@ namespace MonogameEngine
                             maskY += ScrollOffsets[this.ScrollKey].Y;
                         }
 
-                        float elementX = element.Pos().X;
-                        float elementY = element.Pos().Y;
+                        float elementX = element.AbsPos().X;
+                        float elementY = element.AbsPos().Y;
                         if (this.Relative)
                         {
                             maskX += elementX;
@@ -162,6 +189,26 @@ namespace MonogameEngine
                         this.Effect.Parameters["b"].SetValue(this.Parameters["B"]);
                         this.Effect.Parameters["a"].SetValue(this.Parameters["A"]);
                         this.Effect.Parameters["outlineSize"].SetValue(this.Parameters["Radius"]);
+                        this.Effect.Parameters["w"].SetValue(element.Width);
+                        this.Effect.Parameters["h"].SetValue(element.Height);
+
+                        break;
+
+                    case EffectAgentType.Fog:
+
+                        this.Effect.Parameters["time"].SetValue((MsEllapsed + this.TimeOffset) * this.TimeScale);
+                        this.Effect.Parameters["center"].SetValue(new Vector2(this.Parameters["X"], this.Parameters["Y"]));
+
+                        break;
+
+                    case EffectAgentType.ChestLootBeam:
+
+                        this.Effect.Parameters["time"].SetValue((MsEllapsed + this.TimeOffset) * this.TimeScale);
+                        this.Effect.Parameters["w"].SetValue((float)element.Width);
+                        this.Effect.Parameters["h"].SetValue((float)element.Height);
+                        this.Effect.Parameters["r"].SetValue(this.Parameters["R"]);
+                        this.Effect.Parameters["g"].SetValue(this.Parameters["G"]);
+                        this.Effect.Parameters["b"].SetValue(this.Parameters["B"]);
 
                         break;
                 }

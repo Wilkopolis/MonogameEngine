@@ -71,7 +71,6 @@ namespace MonogameEngine
                 if (this.Target.Texture != Textures[CurrentStage.SpriteKey].Texture)
                 {
                     this.Target.Texture = Textures[CurrentStage.SpriteKey].Texture;
-                    this.Target.Resize();
 
                     this.Target.FlipHorizontal = this.Flipped;
                 }
@@ -81,11 +80,7 @@ namespace MonogameEngine
                 Vector2 CurrentOffset = CurrentStage.GetOffset(CurrentStage);
                 Vector2 TotalOffset = this.ElapsedOffset + CurrentOffset;
 
-                this.Offset = TotalOffset + CurrentStage.FrameOffset;
-                if (this.Flipped)
-                {
-                    this.Offset.X = (CurrentStage.SpriteDimensions.X - this.Target.Texture.Width) * this.Target.Scale + TotalOffset.X - CurrentStage.FrameOffset.X;
-                }
+                this.Offset = TotalOffset;
 
                 CurrentStage.Elapsed += MsEllapsed - this.LastFrame;
                 Vector2 nextFrameOffset = this.ElapsedOffset + CurrentStage.GetOffset(CurrentStage);

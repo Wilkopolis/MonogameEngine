@@ -175,7 +175,7 @@ namespace MonogameEngine
         {
             string key = keyBase;
             if (keyBase == "")
-                key = "t" + Hash++;
+                key = "timeout" + screen.Flags["hash"]++;
 
             Animation t = new TimeBuffer(millis, a);
             t.Key = key;

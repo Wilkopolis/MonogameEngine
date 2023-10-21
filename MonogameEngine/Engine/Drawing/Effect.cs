@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static MonogameEngine.MonogameEngine;
 
 namespace MonogameEngine
 {
@@ -11,8 +12,12 @@ namespace MonogameEngine
     {
         public enum EffectType
         {
+            Color,
             Lighten,
             Stroke,
+            GlowSmoke,
+            Fog,
+            ChestLootBeam,
             // Masks
             IncludeMask, ExcludeMask, KeyMask, RadialMask,
             // Blur
@@ -41,6 +46,30 @@ namespace MonogameEngine
                         result.Parameters["R"] = 1.25f;
                         result.Parameters["G"] = 1.25f;
                         result.Parameters["B"] = 1.25f;
+                        break;
+                    case EffectType.GlowSmoke:
+                        result = new EffectAgent();
+                        result.Effect = Effects["color_smoke"];
+                        result.Type = EffectAgentType.ColorSmoke;
+                        result.Parameters["R"] = 1f;
+                        result.Parameters["G"] = .8f;
+                        result.Parameters["B"] = .2f;
+                        result.Parameters["Radius"] = 40f;
+                        result.Parameters["Power"] = 0f;
+                        break;
+                    case EffectType.Fog:
+                        result = new EffectAgent();
+                        result.Effect = Effects["fog"];
+                        result.Type = EffectAgentType.Fog;
+                        break;
+                    case EffectType.ChestLootBeam:
+                        result = new EffectAgent();
+                        result.Effect = Effects["chest_beam"];
+                        result.Type = EffectAgentType.ChestLootBeam;
+                        result.TimeScale = .006f;
+                        result.Parameters["R"] = .7f;
+                        result.Parameters["G"] = .5f;
+                        result.Parameters["B"] = .2f;
                         break;
                 }
 
@@ -128,7 +157,7 @@ namespace MonogameEngine
                 }
 
                 EffectAgent result = null;
-                int priority = 99;
+                int priority = 89;
 
                 switch (blur)
                 {

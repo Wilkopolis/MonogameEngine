@@ -109,16 +109,6 @@ namespace MonogameEngine
                 foreach (AnimationFrame key in this.Frames)
                     stages.Add(new AnimationStage(key.FrameKey, key.Length / speed, key.FrameOffset * scale, new Vector2(this.SpriteTarget.Width, this.SpriteTarget.Height), stage1Func));
 
-                // check to see if any frames match our current frame - start from there
-                //int i = 0;
-                //while (i < stages.Count)
-                //{
-                //    if (Textures[stages[i].SpriteKey].Texture == this.SpriteTarget.Texture)
-                //        break;
-
-                //    i++;
-                //}
-
                 Animation result = null;
                 switch (this.Direction)
                 {

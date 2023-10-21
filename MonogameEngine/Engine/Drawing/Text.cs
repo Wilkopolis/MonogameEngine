@@ -233,8 +233,11 @@ namespace MonogameEngine
 
             public static RenderTarget2D TextCanvas;
 
-            public Text(string text = "", Font font = null, int fontSize = 12, float x = 0, float y = 0, float zIndex = 1f)
+            public Text(string text = "", Font font = null, int fontSize = 20, float x = 0, float y = 0, float zIndex = 1f)
             {
+                if (font == null)
+                    font = Fonts.K2D;
+
                 this.Position = new Vector2(x, y);
                 this.String = text;
                 this.Font = font;
@@ -249,8 +252,11 @@ namespace MonogameEngine
                 this.RenderPeriod = -1;
             }
 
-            public Text(float x = 0, float y = 0, string text = "", Font font = null, int fontSize = 12, float zIndex = 1f)
+            public Text(float x = 0, float y = 0, string text = "", Font font = null, int fontSize = 20, float zIndex = 1f)
             {
+                if (font == null)
+                    font = Fonts.K2D;
+
                 this.Position = new Vector2(x, y);
                 this.String = text;
                 this.Font = font;
@@ -463,7 +469,7 @@ namespace MonogameEngine
                 if (!this.IsVisible())
                     return;
 
-                Vector2 pos = this.ScreenPos();
+                Vector2 pos = this.Pos();
 
                 // due to stroking, we make the texture bigger and draw it offset. Correct it here
                 if (this.EffectAgents.Any(effect => effect.EffectType == EffectType.Stroke))

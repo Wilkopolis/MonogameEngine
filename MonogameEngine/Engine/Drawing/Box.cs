@@ -184,7 +184,7 @@ namespace MonogameEngine
                 if (!this.IsVisible())
                     return;
 
-                Vector2 position = this.ScreenPos();
+                Vector2 position = this.Pos();
 
                 if (this.RotationStyle == RotationStyle.Fixed)
                     position += this.Origin;

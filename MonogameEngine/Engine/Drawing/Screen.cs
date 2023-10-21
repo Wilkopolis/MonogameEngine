@@ -43,6 +43,9 @@ namespace MonogameEngine
 
             public void Add(string key, Element element)
             {
+                if (this.Elements.ContainsKey(key))
+                    Remove(key);
+
                 element.Parent = this;
                 element.Key = key;
                 this.Elements[element.Key] = element;
@@ -77,7 +80,7 @@ namespace MonogameEngine
                     return;
 
                 spriteBatch.Begin(SpriteSortMode.Immediate, this.BlendState);
-                spriteBatch.Draw(this.GetTexture(), this.ScreenPos(), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+                spriteBatch.Draw(this.GetTexture(), this.Pos(), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
                 spriteBatch.End();
             }
 

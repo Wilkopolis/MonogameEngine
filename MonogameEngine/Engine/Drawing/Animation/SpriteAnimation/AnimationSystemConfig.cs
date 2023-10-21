@@ -13,6 +13,13 @@ namespace MonogameEngine
         static Dictionary<string, AnimationSystem> AnimationSystems = new Dictionary<string, AnimationSystem>();
         void LoadAnimationSystems()
         {
+            /*
+             *  1. All frames have to be the same size
+             *  2. All frames have to use the same floor (if its 10px from the bottom, they all have to sit like that)
+             *  3. The idle frame has to be horizontally centered
+             *  4. All animations have to line up with the idle frame
+             */
+
             // go to characters folder
             string path = Directory.GetCurrentDirectory();
             string newPath = Path.GetFullPath(Path.Combine(path, @"..\..\..\Content\sprites\characters\"));

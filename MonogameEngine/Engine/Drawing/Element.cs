@@ -103,7 +103,7 @@ namespace MonogameEngine
             protected List<EffectAgent> EffectAgents = new List<EffectAgent>();
 
             // for miscellaneous flags and timekeeping
-            public Dictionary<string, float> Flags = new Dictionary<string, float>() { { "hash", 0 } };
+            public Dictionary<string, float> Flags = new Dictionary<string, float>() { { "hash", 0 }, { "active", 0 } };
 
             public abstract void Draw();
             public abstract void Resize();
@@ -248,10 +248,10 @@ namespace MonogameEngine
             public virtual bool IsOnScreen()
             {
                 // if offscreen, just say no
-                float posx = this.Pos().X;
-                float posy = this.Pos().Y;
-                float right = this.Right();
-                float bot = this.Bot();
+                float posx = this.AbsPos().X;
+                float posy = this.AbsPos().Y;
+                float right = this.AbsRight();
+                float bot = this.AbsBot();
 
                 float screenX = 0;
                 float screenY = 0;
@@ -260,10 +260,10 @@ namespace MonogameEngine
                 Screen screen = this.GetScreen();
                 if (screen != null)
                 {
-                    screenX = screen.Pos().X;
-                    screenY = screen.Pos().Y;
-                    screenRight = screen.Right();
-                    screenBot = screen.Bot();
+                    screenX = screen.AbsPos().X;
+                    screenY = screen.AbsPos().Y;
+                    screenRight = screen.AbsRight();
+                    screenBot = screen.AbsBot();
                 }
 
                 bool check1 = (posx >= screenX && posx <= screenRight);
@@ -285,15 +285,15 @@ namespace MonogameEngine
                 return this.Pressed && this.IsMouseOver();
             }
 
-            public virtual Vector2 GetScreenCenter()
+            public virtual Vector2 GetCenter()
             {
                 Vector2 Pos = this.Position;
                 return new Vector2(Pos.X + this.Width / 2f, Pos.Y + this.Height / 2f);
             }
 
-            public virtual Vector2 GetCenter()
+            public virtual Vector2 GetAbsCenter()
             {
-                Vector2 Pos = this.Pos();
+                Vector2 Pos = this.AbsPos();
                 return new Vector2(Pos.X + this.Width / 2f, Pos.Y + this.Height / 2f);
             }
 
@@ -302,19 +302,29 @@ namespace MonogameEngine
                 return new Vector2(this.Width / 2f, this.Height / 2f);
             }
 
-            public virtual float GetCenterX()
+            public virtual float GetAbsCenterX()
             {
-                return this.Pos().X + this.Width / 2f;
+                return this.AbsPos().X + this.Width / 2f;
             }
 
-            public virtual float GetCenterY()
+            public virtual float GetAbsCenterY()
             {
-                return this.Pos().Y + this.Height / 2f;
+                return this.AbsPos().Y + this.Height / 2f;
             }
 
-            public virtual float Bot()
+            public virtual float AbsBot()
+            {
+                return this.AbsPos().Y + this.Height;
+            }
+
+            public virtual float ScreenBot()
             {
                 return this.Pos().Y + this.Height;
+            }
+
+            public virtual float AbsRight()
+            {
+                return this.AbsPos().X + this.Width;
             }
 
             public virtual float Right()
@@ -328,11 +338,6 @@ namespace MonogameEngine
                 this.CenterY(center.Y);
             }
 
-            public virtual void ScreenCenter(Element element)
-            {
-                this.Center(element.GetScreenCenter());
-            }
-
             public virtual void Center(Element element)
             {
                 this.Center(element.GetCenter());
@@ -340,7 +345,7 @@ namespace MonogameEngine
 
             public virtual void CenterX(Element element)
             {
-                this.CenterX(element.GetCenterX());
+                this.CenterX(element.GetCenter().X);
             }
 
             public virtual void CenterX(float xPos)
@@ -356,7 +361,7 @@ namespace MonogameEngine
             }
 
             // where in the window are we
-            public Vector2 Pos()
+            public Vector2 AbsPos()
             {
                 if (this == DraggingElement)
                     return new Vector2(CurrentMouseState.X, CurrentMouseState.Y) + this.CursorOffset;
@@ -373,7 +378,11 @@ namespace MonogameEngine
                 }
 
                 if (this.Parent != null)
-                    pos += this.Parent.Pos();
+                    pos += this.Parent.AbsPos();
+
+                // round to the nearest pixel so as to not draw between pixels (and blur result)
+                pos.X = (int)Math.Round(pos.X);
+                pos.Y = (int)Math.Round(pos.Y);
 
                 return pos;
             }
@@ -393,7 +402,7 @@ namespace MonogameEngine
             }
 
             // where in the screen are we
-            public Vector2 ScreenPos()
+            public Vector2 Pos()
             {
                 Vector2 pos = this.Position + this.AnimationOffset() + this.Offset();
 
@@ -407,23 +416,31 @@ namespace MonogameEngine
                 }
 
                 if (this.Parent != null && this.Parent is not Screen)
-                    pos += this.Parent.ScreenPos();
+                    pos += this.Parent.Pos();
 
                 if (this == DraggingElement)
                 {
                     Screen screen = this.GetScreen();
-                    return new Vector2(CurrentMouseState.X, CurrentMouseState.Y) + this.CursorOffset - screen.Pos();
+                    return new Vector2(CurrentMouseState.X, CurrentMouseState.Y) + this.CursorOffset - screen.AbsPos();
                 }
+
+                // round to the nearest pixel so as to not draw between pixels (and blur result)
+                pos.X = (int)Math.Round(pos.X);
+                pos.Y = (int)Math.Round(pos.Y);
 
                 return pos;
             }
 
-            public Vector2 PosNoScroll()
+            public Vector2 AbsPosNoScroll()
             {
                 Vector2 pos = this.Position + this.AnimationOffset() + this.Offset();
 
                 if (this.Parent != null)
-                    pos += this.Parent.PosNoScroll();
+                    pos += this.Parent.AbsPosNoScroll();
+
+                // round to the nearest pixel so as to not draw between pixels (and blur result)
+                pos.X = (int)Math.Round(pos.X);
+                pos.Y = (int)Math.Round(pos.Y);
 
                 return pos;
             }

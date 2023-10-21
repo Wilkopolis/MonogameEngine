@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,45 @@ namespace MonogameEngine
             public bool Moving = false;
             public bool Attacking = false;
 
+            public Vector2 GetCenter()
+            {
+                Vector2 center = this.Sprite.GetCenter();
+                center.Y += this.AnimationSystem.Offsets["Center"].Y * this.Sprite.Scale;
+
+                if (this.Direction == Direction.E)
+                    center.X += this.AnimationSystem.Offsets["Center"].X * this.Sprite.Scale;
+                else
+                    center.X -= this.AnimationSystem.Offsets["Center"].X * this.Sprite.Scale;
+
+                return center;
+            }
+
+            public Vector2 GetEmitter()
+            {
+                Vector2 center = this.Sprite.GetCenter();
+                center.Y += this.AnimationSystem.Offsets["Emitter"].Y * this.Sprite.Scale;
+
+                if (this.Direction == Direction.E)
+                    center.X += this.AnimationSystem.Offsets["Emitter"].X * this.Sprite.Scale;
+                else
+                    center.X -= this.AnimationSystem.Offsets["Emitter"].X * this.Sprite.Scale;
+
+                return center;
+            }
+
+            public Vector2 GetFloor()
+            {
+                Vector2 center = this.Sprite.GetCenter();
+                center.Y += this.AnimationSystem.Offsets["Floor"].Y * this.Sprite.Scale;
+
+                if (this.Direction == Direction.E)
+                    center.X += this.AnimationSystem.Offsets["Floor"].X * this.Sprite.Scale;
+                else
+                    center.X -= this.AnimationSystem.Offsets["Floor"].X * this.Sprite.Scale;
+
+                return center;
+            }
+
             public void AnimateIdle(float speed = 1)
             {
                 this.Sprite.Animations.Clear();
@@ -37,6 +77,24 @@ namespace MonogameEngine
                         break;
                     case Direction.W:
                         this.AnimationSystem.Sequences["IdleLeft"].PlayStatic(this.Sprite.GetScreen(), speed: speed);
+                        break;
+                }
+            }
+
+            public void AnimateDamage(float speed = 1, Action callback = null)
+            {
+                this.Sprite.Animations.Clear();
+
+                this.Moving = false;
+                this.Attacking = false;
+
+                switch (this.Direction)
+                {
+                    case Direction.E:
+                        this.AnimationSystem.Sequences["DamageRight"].PlayStatic(this.Sprite.GetScreen(), speed: speed, callback: callback);
+                        break;
+                    case Direction.W:
+                        this.AnimationSystem.Sequences["DamageLeft"].PlayStatic(this.Sprite.GetScreen(), speed: speed, callback: callback);
                         break;
                 }
             }
@@ -73,9 +131,15 @@ namespace MonogameEngine
                 {
                     case Direction.N:
 
+                        // match our direction
+                        this.AnimationSystem.Sequences["WalkUp"].Flipped = this.Direction == Direction.W;
+
                         return (WalkAnimation)this.AnimationSystem.Sequences["WalkUp"].PlayMove(this.Sprite.GetScreen(), delta, speed, callback, checkComplete);
 
                     case Direction.S:
+
+                        // match our direction
+                        this.AnimationSystem.Sequences["WalkDown"].Flipped = this.Direction == Direction.W;
 
                         return (WalkAnimation)this.AnimationSystem.Sequences["WalkDown"].PlayMove(this.Sprite.GetScreen(), delta, speed, callback, checkComplete);
 
@@ -83,7 +147,7 @@ namespace MonogameEngine
 
                         this.Direction = direction;
 
-                        return (WalkAnimation)this.AnimationSystem.Sequences["WalkLeft"].PlayMove(this.Sprite.GetScreen(), delta, speed, callback, checkComplete);
+                        return (WalkAnimation)this.AnimationSystem.Sequences["WalkRight"].PlayMove(this.Sprite.GetScreen(), delta, speed, callback, checkComplete);
 
                     case Direction.W:
 

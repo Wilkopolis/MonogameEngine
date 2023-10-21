@@ -11,40 +11,40 @@ sampler s0;
 float r = 0;
 float g = 0;
 float b = 0;
-float outlineSize = 0;
 float a = 0;
+// how many pixels
+float outlineSize = 0;
+// dimensions
+int w = 0;
+int h = 0;
 
 float4 PixelShaderFunction(float2 coords : TEXCOORD0) : COLOR0
 {
-    float2 uv = coords;
-
-    const float4 target = float4(0.0, 0.0, 0.0, 0.0); // Find transparent
-    const float threshold = 0.4; // Controls target color range
-    const float softness = 0.1; // Controls linear falloff
-
+    const float4 target = float4(0.0, 0.0, 0.0, 0.0);
+    const float TAU = 6.28318530;
     const float steps = 32.0;
-    const float total = steps / 6.28318530;
     
-    // Apply linear color key
-    float4 mat = tex2D(s0, uv);
-    float diff = distance(mat.a, target.a) - threshold;
-    float factor = clamp(diff / softness, 0.0, 1.0);
-
-    float4 fragColor = float4(0.0, 0.0, 0.0, 0.0);
+    float2 uv = coords;
     
-    for (float i = 0.0; i < steps; i++)
+    // Correct aspect ratio
+    float2 aspect = 1.0 / float2(w, h);
+    
+    float4 fragColor = float4(0, 0, 0, 0);
+    for (float i = 0.0; i < TAU; i += TAU / steps)
     {
-        // Sample image in a circular pattern
-        float j = i / total;
-        float4 col = tex2D(s0, uv + float2(sin(j), cos(j)) * outlineSize);
-        
-        // Apply linear color key
-        float diff2 = distance(col.a, target.a) - threshold;
-        fragColor = lerp(fragColor, float4(r, g, b, 1.0), clamp(diff2 / softness, 0.0, 1.0));
+		// Sample image in a circular pattern
+        float2 offset = float2(sin(i), cos(i)) * aspect * outlineSize;
+        float4 col = tex2D(s0, uv + offset);
+		
+		// Mix outline with background
+        float alpha = smoothstep(0.5, 0.7, distance(col.rgba, target));
+        fragColor = lerp(fragColor, float4(r, g, b, a), alpha);
     }
-    
+	
+    // Overlay original color
+    float4 mat = tex2D(s0, uv);
+    float factor = smoothstep(0.5, 0.7, distance(mat.rgba, target));
     fragColor = lerp(fragColor, mat, factor);
-    fragColor.rgba *= a;
     return fragColor;
 }
 

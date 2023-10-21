@@ -1,7 +1,8 @@
 {
   "Offsets": {
     "Floor": "0, -10",
-    "Center": "-102, 70"
+    "Center": "0, 70",
+    "Emitter": "22, -70"
   },
   "Sequences": {
     "IdleLeft": {
@@ -54,32 +55,32 @@
       "Frames": [
         {
           "FrameKey": "characters/hero/walk/frame1",
-          "FrameOffset": "-58, 0",
-          "Length": 101
-        },
-        {
-          "FrameKey": "characters/hero/walk/frame2",
           "FrameOffset": "-57, 0",
           "Length": 101
         },
         {
+          "FrameKey": "characters/hero/walk/frame2",
+          "FrameOffset": "-61, 0",
+          "Length": 101
+        },
+        {
           "FrameKey": "characters/hero/walk/frame3",
-          "FrameOffset": "-38, 0",
+          "FrameOffset": "-51, 0",
           "Length": 151
         },
         {
           "FrameKey": "characters/hero/walk/frame4",
-          "FrameOffset": "-32, 0",
+          "FrameOffset": "-23, 0",
           "Length": 151
         },
         {
           "FrameKey": "characters/hero/walk/frame5",
-          "FrameOffset": "-11, 0",
+          "FrameOffset": "-17, 0",
           "Length": 151
         },
         {
           "FrameKey": "characters/hero/walk/frame6",
-          "FrameOffset": "-8, 0",
+          "FrameOffset": "-4, 0",
           "Length": 101
         },
         {
@@ -89,7 +90,7 @@
         },
         {
           "FrameKey": "characters/hero/walk/frame8",
-          "FrameOffset": "-75, 0",
+          "FrameOffset": "-52, 0",
           "Length": 101
         }
       ],
@@ -101,32 +102,32 @@
       "Frames": [
         {
           "FrameKey": "characters/hero/walk/frame1",
-          "FrameOffset": "58, 0",
-          "Length": 101
-        },
-        {
-          "FrameKey": "characters/hero/walk/frame2",
           "FrameOffset": "57, 0",
           "Length": 101
         },
         {
+          "FrameKey": "characters/hero/walk/frame2",
+          "FrameOffset": "61, 0",
+          "Length": 101
+        },
+        {
           "FrameKey": "characters/hero/walk/frame3",
-          "FrameOffset": "38, 0",
+          "FrameOffset": "51, 0",
           "Length": 151
         },
         {
           "FrameKey": "characters/hero/walk/frame4",
-          "FrameOffset": "32, 0",
+          "FrameOffset": "23, 0",
           "Length": 151
         },
         {
           "FrameKey": "characters/hero/walk/frame5",
-          "FrameOffset": "11, 0",
+          "FrameOffset": "17, 0",
           "Length": 151
         },
         {
           "FrameKey": "characters/hero/walk/frame6",
-          "FrameOffset": "8, 0",
+          "FrameOffset": "4, 0",
           "Length": 101
         },
         {
@@ -136,7 +137,7 @@
         },
         {
           "FrameKey": "characters/hero/walk/frame8",
-          "FrameOffset": "75, 0",
+          "FrameOffset": "52, 0",
           "Length": 101
         }
       ],
@@ -148,32 +149,32 @@
       "Frames": [
         {
           "FrameKey": "characters/hero/walk/frame1",
-          "FrameOffset": "0, -58",
-          "Length": 101
-        },
-        {
-          "FrameKey": "characters/hero/walk/frame2",
           "FrameOffset": "0, -57",
           "Length": 101
         },
         {
+          "FrameKey": "characters/hero/walk/frame2",
+          "FrameOffset": "0, -61",
+          "Length": 101
+        },
+        {
           "FrameKey": "characters/hero/walk/frame3",
-          "FrameOffset": "0, -38",
+          "FrameOffset": "0, -51",
           "Length": 151
         },
         {
           "FrameKey": "characters/hero/walk/frame4",
-          "FrameOffset": "0, -32",
+          "FrameOffset": "0, -23",
           "Length": 151
         },
         {
           "FrameKey": "characters/hero/walk/frame5",
-          "FrameOffset": "0, -11",
+          "FrameOffset": "0, -17",
           "Length": 151
         },
         {
           "FrameKey": "characters/hero/walk/frame6",
-          "FrameOffset": "0, -8",
+          "FrameOffset": "0, -4",
           "Length": 101
         },
         {
@@ -183,7 +184,7 @@
         },
         {
           "FrameKey": "characters/hero/walk/frame8",
-          "FrameOffset": "0, -75",
+          "FrameOffset": "0, -52",
           "Length": 101
         }
       ],
@@ -195,32 +196,32 @@
       "Frames": [
         {
           "FrameKey": "characters/hero/walk/frame1",
-          "FrameOffset": "0, 58",
-          "Length": 101
-        },
-        {
-          "FrameKey": "characters/hero/walk/frame2",
           "FrameOffset": "0, 57",
           "Length": 101
         },
         {
+          "FrameKey": "characters/hero/walk/frame2",
+          "FrameOffset": "0, 61",
+          "Length": 101
+        },
+        {
           "FrameKey": "characters/hero/walk/frame3",
-          "FrameOffset": "0, 38",
+          "FrameOffset": "0, 51",
           "Length": 151
         },
         {
           "FrameKey": "characters/hero/walk/frame4",
-          "FrameOffset": "0, 32",
+          "FrameOffset": "0, 23",
           "Length": 151
         },
         {
           "FrameKey": "characters/hero/walk/frame5",
-          "FrameOffset": "0, 11",
+          "FrameOffset": "0, 17",
           "Length": 151
         },
         {
           "FrameKey": "characters/hero/walk/frame6",
-          "FrameOffset": "0, 8",
+          "FrameOffset": "0, 4",
           "Length": 101
         },
         {
@@ -230,7 +231,7 @@
         },
         {
           "FrameKey": "characters/hero/walk/frame8",
-          "FrameOffset": "0, 75",
+          "FrameOffset": "0, 52",
           "Length": 101
         }
       ],
@@ -428,11 +429,11 @@
       "Frames": [
         {
           "FrameKey": "characters/hero/damage/frame1",
-          "Length": 120
+          "Length": 80
         },
         {
           "FrameKey": "characters/hero/damage/frame2",
-          "Length": 120
+          "Length": 240
         },
         {
           "FrameKey": "characters/hero/damage/frame3",
@@ -447,11 +448,11 @@
       "Frames": [
         {
           "FrameKey": "characters/hero/damage/frame1",
-          "Length": 120
+          "Length": 80
         },
         {
           "FrameKey": "characters/hero/damage/frame2",
-          "Length": 120
+          "Length": 240
         },
         {
           "FrameKey": "characters/hero/damage/frame3",
