@@ -22,7 +22,7 @@ namespace MonogameEngine
 
             // go to characters folder
             string path = Directory.GetCurrentDirectory();
-            string newPath = Path.GetFullPath(Path.Combine(path, @"..\..\..\Content\sprites\characters\"));
+            string newPath = Path.GetFullPath(Path.Combine(path, @"Content\sprites\characters\"));
 
             List<DirectoryInfo> directories = new List<DirectoryInfo>();
             List<FileInfo> files = new List<FileInfo>();

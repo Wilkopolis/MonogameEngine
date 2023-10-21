@@ -93,7 +93,7 @@ namespace MonogameEngine
         void LoadEffects()
         {
             string path = Directory.GetCurrentDirectory();
-            string newPath = Path.GetFullPath(Path.Combine(path, @"..\..\..\Content\shaders\"));
+            string newPath = Path.GetFullPath(Path.Combine(path, @"Content\shaders\"));
 
             List<DirectoryInfo> directories = new List<DirectoryInfo>();
             List<FileInfo> files = new List<FileInfo>();
@@ -111,7 +111,7 @@ namespace MonogameEngine
                 {
                     int lastDot = f.Name.LastIndexOf('.');
                     string fileExtension = f.Name.Substring(lastDot + 1, f.Name.Length - lastDot - 1).ToLower();
-                    if (fileExtension == "fx")
+                    if (fileExtension == "xnb")
                         files.Add(f);
                 }
 
@@ -141,7 +141,7 @@ namespace MonogameEngine
         void LoadTextures()
         {
             string path = Directory.GetCurrentDirectory();
-            string newPath = Path.GetFullPath(Path.Combine(path, @"..\..\..\Content\sprites\"));
+            string newPath = Path.GetFullPath(Path.Combine(path, @"Content\sprites\"));
 
             List<DirectoryInfo> directories = new List<DirectoryInfo>();
             List<FileInfo> files = new List<FileInfo>();
@@ -159,7 +159,7 @@ namespace MonogameEngine
                 {
                     int lastDot = f.Name.LastIndexOf('.');
                     string fileExtension = f.Name.Substring(lastDot + 1, f.Name.Length - lastDot - 1).ToLower();
-                    if (fileExtension == "png" || fileExtension == "jpg" || fileExtension == "jpeg")
+                    if (fileExtension == "xnb")
                         files.Add(f);
                 }
 

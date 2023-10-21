@@ -118,7 +118,7 @@ namespace MonogameEngine
         void LoadFonts()
         {
             string path = Directory.GetCurrentDirectory();
-            string newPath = Path.GetFullPath(Path.Combine(path, @"..\..\..\Content\fonts\"));
+            string newPath = Path.GetFullPath(Path.Combine(path, @"Content\fonts\"));
 
             List<DirectoryInfo> directories = new List<DirectoryInfo>();
             List<FileInfo> files = new List<FileInfo>();
@@ -136,7 +136,7 @@ namespace MonogameEngine
                 {
                     int lastDot = f.Name.LastIndexOf('.');
                     string fileExtension = f.Name.Substring(lastDot + 1, f.Name.Length - lastDot - 1).ToLower();
-                    if (fileExtension == "bhfont")
+                    if (fileExtension == "xnb")
                         files.Add(f);
                 }
 
