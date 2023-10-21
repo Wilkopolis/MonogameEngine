@@ -13,11 +13,18 @@ namespace MonogameEngine
         public enum EffectType
         {
             Color,
+            Gradient,
             Lighten,
             Stroke,
             GlowSmoke,
             Fog,
             ChestLootBeam,
+            Zap,
+            ZapDistort,
+            LevelUp1Front,
+            LevelUp1Back,
+            LevelUp2Front,
+            LevelUp2Back,
             // Masks
             IncludeMask, ExcludeMask, KeyMask, RadialMask,
             // Blur
@@ -67,9 +74,68 @@ namespace MonogameEngine
                         result.Effect = Effects["chest_beam"];
                         result.Type = EffectAgentType.ChestLootBeam;
                         result.TimeScale = .006f;
-                        result.Parameters["R"] = .7f;
-                        result.Parameters["G"] = .5f;
-                        result.Parameters["B"] = .2f;
+                        result.Parameters["R"] = .7f * 1.5f;
+                        result.Parameters["G"] = .5f * 1.5f;
+                        result.Parameters["B"] = .2f * 1.5f;
+                        break;
+                    case EffectType.Zap:
+                        result = new EffectAgent();
+                        result.Effect = Effects["zap"];
+                        result.Type = EffectAgentType.Zap;
+                        result.TimeScale = .001f;
+                        result.Parameters["R"] = .7f * 1.5f;
+                        result.Parameters["G"] = .5f * 1.5f;
+                        result.Parameters["B"] = .2f * 1.5f;
+                        break;
+                    case EffectType.ZapDistort:
+                        result = new EffectAgent();
+                        result.Effect = Effects["zap_distort"];
+                        result.Type = EffectAgentType.ZapDistort;
+                        result.TimeScale = .001f;
+                        result.Parameters["X"] = (float)Random.NextDouble() * 10;
+                        result.Parameters["Y"] = Random.Next(2) - 1;
+                        break;
+                    case EffectType.LevelUp1Front:
+                        result = new EffectAgent();
+                        result.Effect = Effects["level_up_beam"];
+                        result.Type = EffectAgentType.LvlUpBeam;
+                        result.TimeScale = .002f;
+                        result.Parameters["X"] = 0;
+                        result.Parameters["Y"] = 0;
+                        break;
+                    case EffectType.LevelUp1Back:
+                        result = new EffectAgent();
+                        result.Effect = Effects["level_up_beam"];
+                        result.Type = EffectAgentType.LvlUpBeam;
+                        result.TimeScale = .002f;
+                        result.Parameters["X"] = 1;
+                        result.Parameters["Y"] = 0;
+                        break;
+                    case EffectType.LevelUp2Front:
+                        result = new EffectAgent();
+                        result.Effect = Effects["level_up_beam"];
+                        result.Type = EffectAgentType.LvlUpBeam;
+                        result.TimeScale = .002f;
+                        result.Parameters["X"] = 0;
+                        result.Parameters["Y"] = 1;
+                        break;
+                    case EffectType.LevelUp2Back:
+                        result = new EffectAgent();
+                        result.Effect = Effects["level_up_beam"];
+                        result.Type = EffectAgentType.LvlUpBeam;
+                        result.TimeScale = .002f;
+                        result.Parameters["X"] = 1;
+                        result.Parameters["Y"] = 1;
+                        break;
+                    case EffectType.Gradient:
+                        result = new EffectAgent();
+                        result.Effect = Effects["gradient"];
+                        result.Type = EffectAgentType.Gradient;
+                        result.Parameters["CX"] = .5f;
+                        result.Parameters["CY"] = .5f;
+                        result.Parameters["Radius"] = .5f;
+                        result.Parameters["Alpha1"] = 1;
+                        result.Parameters["Alpha2"] = 0;
                         break;
                 }
 

@@ -317,7 +317,7 @@ namespace MonogameEngine
                 return this.AbsPos().Y + this.Height;
             }
 
-            public virtual float ScreenBot()
+            public virtual float Bot()
             {
                 return this.Pos().Y + this.Height;
             }
@@ -363,9 +363,6 @@ namespace MonogameEngine
             // where in the window are we
             public Vector2 AbsPos()
             {
-                if (this == DraggingElement)
-                    return new Vector2(CurrentMouseState.X, CurrentMouseState.Y) + this.CursorOffset;
-
                 Vector2 pos = this.Position + this.AnimationOffset() + this.Offset();
 
                 foreach (string scrollKey in this.ScrollKeys)

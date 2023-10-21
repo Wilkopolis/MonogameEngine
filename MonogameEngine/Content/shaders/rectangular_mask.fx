@@ -1,4 +1,12 @@
-﻿float x;		 // rect left
+﻿#if OPENGL
+#define VS_SHADERMODEL vs_3_0
+#define PS_SHADERMODEL ps_3_0
+#else
+#define VS_SHADERMODEL vs_5_0
+#define PS_SHADERMODEL ps_5_0
+#endif
+
+float x;		 // rect left
 float y;		 // rect top
 float w;		 // rect width
 float h;		 // rect height
@@ -36,7 +44,7 @@ float4 PixelShaderFunction(float2 coords: TEXCOORD0) : COLOR0
 technique Technique1
 {
 	pass Pass1
-	{
-		PixelShader = compile ps_3_0 PixelShaderFunction();
-	}
+    {
+        PixelShader = compile PS_SHADERMODEL PixelShaderFunction();
+    }
 }

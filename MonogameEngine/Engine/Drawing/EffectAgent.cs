@@ -14,6 +14,7 @@ namespace MonogameEngine
             Color,
             ColorShift,
             ColorSmoke,
+            Gradient,
             RectangleMask,
             KeyMask,
             RadialMask,
@@ -22,7 +23,10 @@ namespace MonogameEngine
             Noise,
             Stroke,
             Fog,
-            ChestLootBeam
+            ChestLootBeam,
+            Zap,
+            ZapDistort,
+            LvlUpBeam
         };
 
         public class EffectAgent
@@ -210,6 +214,56 @@ namespace MonogameEngine
                         this.Effect.Parameters["g"].SetValue(this.Parameters["G"]);
                         this.Effect.Parameters["b"].SetValue(this.Parameters["B"]);
 
+                        break;
+
+                    case EffectAgentType.Zap:
+
+                        this.Effect.Parameters["ColorR"].SetValue(this.Parameters["R"]);
+                        this.Effect.Parameters["ColorG"].SetValue(this.Parameters["G"]);
+                        this.Effect.Parameters["ColorB"].SetValue(this.Parameters["B"]);
+                        this.Effect.Parameters["width"].SetValue(element.Width);
+                        this.Effect.Parameters["height"].SetValue(element.Height);
+                        this.Effect.Parameters["time"].SetValue((MsEllapsed + this.TimeOffset) * this.TimeScale);
+
+                        break;
+
+                    case EffectAgentType.ZapDistort:
+
+                        this.Effect.Parameters["offset"].SetValue(this.Parameters["X"]);
+
+                        this.Effect.Parameters["p1"].SetValue(2f * this.Parameters["Y"]);
+                        this.Effect.Parameters["p2"].SetValue(3f);
+                        this.Effect.Parameters["p3"].SetValue(4f);
+                        this.Effect.Parameters["p4"].SetValue(19f);
+                        this.Effect.Parameters["p5"].SetValue(17f);
+
+                        this.Effect.Parameters["q1"].SetValue(.5f);
+                        this.Effect.Parameters["q2"].SetValue(.2f);
+                        this.Effect.Parameters["q3"].SetValue(.27f);
+                        this.Effect.Parameters["q4"].SetValue(.02f);
+                        this.Effect.Parameters["q5"].SetValue(.01f);
+
+                        break;
+
+                    case EffectAgentType.LvlUpBeam:
+
+                        this.Effect.Parameters["time"].SetValue((MsEllapsed + this.TimeOffset) * this.TimeScale);
+                        this.Effect.Parameters["x"].SetValue(this.Parameters["X"]);
+                        this.Effect.Parameters["y"].SetValue(this.Parameters["Y"]);
+                        this.Effect.Parameters["w"].SetValue(element.Width);
+                        this.Effect.Parameters["h"].SetValue(element.Height);
+
+                        break;
+
+                    case EffectAgentType.Gradient:
+                        //position in the text where the gradient is centered
+                        this.Effect.Parameters["x1"].SetValue(this.Parameters["CX"]);
+                        this.Effect.Parameters["y1"].SetValue(this.Parameters["CY"]);
+                        // how far before the gradient should hit 0
+                        this.Effect.Parameters["radius"].SetValue(this.Parameters["Radius"]);
+                        // alpha 2
+                        this.Effect.Parameters["a1"].SetValue(this.Parameters["Alpha1"]);
+                        this.Effect.Parameters["a2"].SetValue(this.Parameters["Alpha2"]);
                         break;
                 }
 

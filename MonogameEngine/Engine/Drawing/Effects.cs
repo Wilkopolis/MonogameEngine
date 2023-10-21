@@ -145,7 +145,7 @@ namespace MonogameEngine
                     float xPos = xMin + (float)Random.NextDouble() * (xMax - xMin);
 
                     float yMin = element.Pos().Y + 45;
-                    float yMax = element.ScreenBot() + 15;
+                    float yMax = element.Bot() + 15;
 
                     float yPos = yMin + (float)Random.NextDouble() * (yMax - yMin);
 
@@ -154,7 +154,7 @@ namespace MonogameEngine
                     Sprite sparkle = new Sprite(0, 0, Textures["core/sparkle/1"], 1f, element.zIndex);
                     sparkle.zIndex += below ? -.001f : .001f;
                     sparkle.Key = "sparkle" + Hash++;
-                    screen.Elements[sparkle.Key] = sparkle;
+                    screen.Add(sparkle);
 
                     sparkle.Center(new Vector2(xPos, yPos));
 
@@ -239,6 +239,264 @@ namespace MonogameEngine
                     lastSparkle = MsEllapsed;
                 }
             });
+        }
+
+        Element AnimateZap(Screen screen, Vector2 source, Vector2 target, float r = 1, float g = .9f, float b = .4f)
+        {
+            float hypo = (source - target).Length();
+            hypo *= source.X < target.X ? -1 : 1;
+            float oppo = source.Y - target.Y;
+            double angle = Math.Asin(oppo / hypo);
+
+            int length =(int)Math.Round(Math.Abs(hypo) * 1.5f / 1f);
+
+            Box zap = new Box(length, length / 2, Color.White, 1f);
+            zap.BlendState = BlendState.Additive;
+            EffectAgent effect = zap.AddEffect(EffectType.Zap);
+            zap.AddEffect(EffectType.ZapDistort);
+
+            effect.Parameters["R"] = r;
+            effect.Parameters["G"] = g;
+            effect.Parameters["B"] = b;
+
+            zap.Origin = new Vector2(zap.Width / 2f, zap.Height / 2f);
+            zap.RotationStyle = RotationStyle.Remote;
+            zap.Rotation = (float)angle;
+            zap.Position = source + (target - source) / 2f;
+            zap.Key = "zap" + screen.Flags["hash"]++;
+
+            screen.Add(zap);
+
+            screen.Animations[zap.Key] = new Fade(zap, 400, 0, delegate
+            {
+                screen.Remove(zap.Key);
+            }) { Easing = Easing.Sin };
+
+            return zap;
+        }
+
+        void AddBuffEffect(Character character)
+        {
+            //Sprite sprite = character.Sprite;
+            //Screen screen = sprite.GetScreen();
+
+            //// Beam 1 //
+            //Box front = new Box(126 * 2, 130 * 2, Color.Black, sprite.zIndex + .001f);
+            //front.Center(sprite.Position + new Vector2(55, 40));
+            //front.Origin = new Vector2(front.Width / 2f, front.Height / 2f);
+            //front.RotationStyle = RotationStyle.InPlace;
+            //front.Rotation = (float)Math.PI / 2f;
+            //front.AddEffect(EffectType.LevelUp1Front).TimeScale = .002f;
+            //front.Key = sprite.Key + "buff_1";
+            //screen.Elements[front.Key] = front;
+
+            //Box back = new Box(126 * 2, 130 * 2, front.Position.X, front.Position.Y, Color.Black, sprite.zIndex - .001f);
+            //back.Origin = new Vector2(back.Width / 2f, back.Height / 2f);
+            //back.RotationStyle = RotationStyle.InPlace;
+            //back.Rotation = (float)Math.PI / 2f;
+            //back.AddEffect(EffectType.LevelUp1Back).TimeScale = .002f;
+            //back.Key = sprite.Key + "buff_2";
+            //screen.Elements[back.Key] = back;
+
+            //// Beam 2 //
+            //Box front2 = new Box(126 * 2, 130 * 2, front.Position.X, front.Position.Y, Color.Black, sprite.zIndex + .001f);
+            //front2.Origin = new Vector2(front2.Width / 2f, front2.Height / 2f);
+            //front2.RotationStyle = RotationStyle.InPlace;
+            //front2.Rotation = (float)Math.PI / 2f;
+            //front2.AddEffect(EffectType.LevelUp4Front).TimeScale = .002f;
+            //front2.Key = sprite.Key + "buff_3";
+            //screen.Elements[front2.Key] = front2;
+
+            //Box back2 = new Box(126 * 2, 130 * 2, front.Position.X, front.Position.Y, Color.Black, sprite.zIndex - .001f);
+            //back2.Origin = new Vector2(back2.Width / 2f, back2.Height / 2f);
+            //back2.RotationStyle = RotationStyle.InPlace;
+            //back2.Rotation = (float)Math.PI / 2f;
+            //back2.AddEffect(EffectType.LevelUp4Back).TimeScale = .002f;
+            //back2.Key = sprite.Key + "buff_4";
+            //screen.Elements[back2.Key] = back2;
+
+            //// make level up gradient
+            //Box gradient = new Box(200, 60, 0, sprite.Position.Y + 72, new Color(.9f, .6f, .4f), sprite.zIndex - .002f);
+            //gradient.CenterX(sprite.Position.X + ToX(65));
+            //gradient.BlendState = BlendState.Additive;
+            //gradient.AddEffect(EffectType.Gradient);
+            //gradient.Key = "combat_effect_buff_" + character.HashId + "_5";
+            //screen.Elements[gradient.Key] = gradient;
+
+            //front.Alpha = .8f;
+            //front2.Alpha = .8f;
+            //back.Alpha = .8f;
+            //back2.Alpha = .8f;
+
+            //screen.Animations["combat_effect_buff_" + character.HashId + "_6"] = new CustomAnimation(gradient, 0, delegate (float percentComplete)
+            //{
+            //    gradient.RenderScale = .9f + .1f * (float)Math.Sin(MsEllapsed * .002f);
+            //    gradient.Offsets["off"] = new Offset(new Vector2(ToX(-20f), ToY(-6f)) * .5f * (float)Math.Sin(MsEllapsed * .002f));
+            //});
+
+            //SetTimeout(screen, delegate
+            //{
+            //    // spawn a lvl up bar
+            //    Sprite bar1 = new Sprite(0, 0, Textures["report_lvlup_bar1-1"], 1f, sprite.zIndex + .1f);
+            //    bar1.Position = sprite.Position + new Vector2(ToX(25), ToY(50));
+            //    bar1.Key = "combat_effect_buff_" + character.HashId + "_" + Hash++;
+            //    bar1.ScrollKey = "dungeonFloor";
+            //    screen.Elements[bar1.Key] = bar1;
+
+            //    List<AnimationStage> stages = new List<AnimationStage>();
+
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-11", 45, new Vector2(0, ToY(0))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-10", 45, new Vector2(0, ToY(-4))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-9", 45, new Vector2(0, ToY(-8))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-8", 45, new Vector2(0, ToY(-12))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-7", 45, new Vector2(0, ToY(-16))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-6", 45, new Vector2(0, ToY(-20))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-5", 45, new Vector2(0, ToY(-24))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-4", 45, new Vector2(0, ToY(-28))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-3", 45, new Vector2(0, ToY(-32))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-2", 45, new Vector2(0, ToY(-36))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-1", 45, new Vector2(0, ToY(-40))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-2", 45, new Vector2(0, ToY(-44))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-3", 45, new Vector2(0, ToY(-48))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-4", 45, new Vector2(0, ToY(-52))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-5", 45, new Vector2(0, ToY(-56))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-6", 45, new Vector2(0, ToY(-60))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-7", 45, new Vector2(0, ToY(-64))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-8", 45, new Vector2(0, ToY(-68))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-9", 45, new Vector2(0, ToY(-72))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-10", 45, new Vector2(0, ToY(-76))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-11", 45, new Vector2(0, ToY(-80))));
+
+            //    // give it an animation
+            //    screen.Animations["combat_effect_buff_" + character.HashId + "_" + Hash++] = new FrameAnimation(bar1, stages, callback: delegate
+            //    {
+            //        screen.Remove(bar1.Key);
+            //    });
+            //}, 300);
+
+            //SetTimeout(screen, delegate
+            //{
+            //    // spawn a lvl up bar
+            //    Sprite bar1 = new Sprite(0, 0, Textures["report_lvlup_bar2-1"], 1f, sprite.zIndex + .1f);
+            //    bar1.Position = sprite.Position + new Vector2(ToX(75), ToY(100));
+            //    bar1.Key = "combat_effect_buff_" + character.HashId + "_" + Hash++;
+            //    bar1.ScrollKey = "dungeonFloor";
+            //    screen.Elements[bar1.Key] = bar1;
+
+            //    List<AnimationStage> stages = new List<AnimationStage>();
+
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-11", 45, new Vector2(0, ToY(0))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-10", 45, new Vector2(0, ToY(-4))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-9", 45, new Vector2(0, ToY(-8))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-8", 45, new Vector2(0, ToY(-12))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-7", 45, new Vector2(0, ToY(-16))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-6", 45, new Vector2(0, ToY(-20))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-5", 45, new Vector2(0, ToY(-24))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-4", 45, new Vector2(0, ToY(-28))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-3", 45, new Vector2(0, ToY(-32))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-2", 45, new Vector2(0, ToY(-36))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-1", 45, new Vector2(0, ToY(-40))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-2", 45, new Vector2(0, ToY(-44))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-3", 45, new Vector2(0, ToY(-48))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-4", 45, new Vector2(0, ToY(-52))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-5", 45, new Vector2(0, ToY(-56))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-6", 45, new Vector2(0, ToY(-60))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-7", 45, new Vector2(0, ToY(-64))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-8", 45, new Vector2(0, ToY(-68))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-9", 45, new Vector2(0, ToY(-72))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-10", 45, new Vector2(0, ToY(-76))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar2-11", 45, new Vector2(0, ToY(-80))));
+
+            //    // give it an animation
+            //    screen.Animations["combat_effect_buff_" + character.HashId + "_" + Hash++] = new FrameAnimation(bar1, stages, callback: delegate
+            //    {
+            //        screen.Remove(bar1.Key);
+            //    });
+            //}, 700);
+
+            //SetTimeout(screen, delegate
+            //{
+            //    // spawn a lvl up bar
+            //    Sprite bar1 = new Sprite(0, 0, Textures["report_lvlup_bar1-1"], .5f, sprite.zIndex - .1f);
+            //    bar1.Position = sprite.Position + new Vector2(ToX(25), ToY(50));
+            //    bar1.Key = "combat_effect_buff_" + character.HashId + "_" + Hash++;
+            //    bar1.ScrollKey = "dungeonFloor";
+            //    screen.Elements[bar1.Key] = bar1;
+
+            //    List<AnimationStage> stages = new List<AnimationStage>();
+
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-11", 45, new Vector2(0, ToY(0))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-10", 45, new Vector2(0, ToY(-4))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-9", 45, new Vector2(0, ToY(-8))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-8", 45, new Vector2(0, ToY(-12))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-7", 45, new Vector2(0, ToY(-16))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-6", 45, new Vector2(0, ToY(-20))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-5", 45, new Vector2(0, ToY(-24))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-4", 45, new Vector2(0, ToY(-28))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-3", 45, new Vector2(0, ToY(-32))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-2", 45, new Vector2(0, ToY(-36))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-1", 45, new Vector2(0, ToY(-40))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-2", 45, new Vector2(0, ToY(-44))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-3", 45, new Vector2(0, ToY(-48))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-4", 45, new Vector2(0, ToY(-52))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-5", 45, new Vector2(0, ToY(-56))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-6", 45, new Vector2(0, ToY(-60))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-7", 45, new Vector2(0, ToY(-64))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-8", 45, new Vector2(0, ToY(-68))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-9", 45, new Vector2(0, ToY(-72))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-10", 45, new Vector2(0, ToY(-76))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-11", 45, new Vector2(0, ToY(-80))));
+
+            //    // give it an animation
+            //    screen.Animations["combat_effect_buff_" + character.HashId + "_" + Hash++] = new FrameAnimation(bar1, stages, callback: delegate
+            //    {
+            //        screen.Remove(bar1.Key);
+            //    });
+
+            //}, 1500);
+
+            //SetTimeout(screen, delegate
+            //{
+            //    // spawn a lvl up bar
+            //    Sprite bar1 = new Sprite(0, 0, Textures["report_lvlup_bar1-1"], 1f, sprite.zIndex - .1f);
+            //    bar1.Position = sprite.Position + new Vector2(ToX(90), ToY(50));
+            //    bar1.Key = "combat_effect_buff_" + character.HashId + "_" + Hash++;
+            //    bar1.ScrollKey = "dungeonFloor";
+            //    Elements[bar1.Key] = bar1;
+
+            //    List<AnimationStage> stages = new List<AnimationStage>();
+
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-11", 45, new Vector2(0, ToY(0))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-10", 45, new Vector2(0, ToY(-4))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-9", 45, new Vector2(0, ToY(-8))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-8", 45, new Vector2(0, ToY(-12))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-7", 45, new Vector2(0, ToY(-16))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-6", 45, new Vector2(0, ToY(-20))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-5", 45, new Vector2(0, ToY(-24))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-4", 45, new Vector2(0, ToY(-28))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-3", 45, new Vector2(0, ToY(-32))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-2", 45, new Vector2(0, ToY(-36))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-1", 45, new Vector2(0, ToY(-40))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-2", 45, new Vector2(0, ToY(-44))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-3", 45, new Vector2(0, ToY(-48))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-4", 45, new Vector2(0, ToY(-52))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-5", 45, new Vector2(0, ToY(-56))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-6", 45, new Vector2(0, ToY(-60))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-7", 45, new Vector2(0, ToY(-64))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-8", 45, new Vector2(0, ToY(-68))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-9", 45, new Vector2(0, ToY(-72))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-10", 45, new Vector2(0, ToY(-76))));
+            //    stages.Add(new AnimationStage("report_lvlup_bar1-11", 45, new Vector2(0, ToY(-80))));
+
+            //    // give it an animation
+            //    screen.Animations["combat_effect_buff_" + character.HashId + "_" + Hash++] = new FrameAnimation(bar1, stages, callback: delegate
+            //    {
+            //        screen.Remove(bar1.Key);
+            //    });
+
+            //    gradient.DoNotInheritAlpha = true;
+            //    screen.Animations["combat_effect_buff_" + character.HashId + "_" + Hash++] = new Fade(gradient, 3000, 0f);
+            //}, 1900);
         }
     }
 }

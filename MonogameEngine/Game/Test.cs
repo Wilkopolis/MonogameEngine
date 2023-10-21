@@ -188,11 +188,11 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1200);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.CenterX(viewport.GetCenter().X);
-            desc1.Position.Y = viewport.ScreenBot() + 60;
+            desc1.Position.Y = viewport.Bot() + 60;
             exampleScreen.Add("description1", desc1);
 
             Sprite codeExample = new Sprite(Textures["examples/code/box"]);
-            codeExample.Position.Y = desc1.ScreenBot() + 60;
+            codeExample.Position.Y = desc1.Bot() + 60;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -307,11 +307,11 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1200);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.CenterX(viewport.GetCenter().X);
-            desc1.Position.Y = viewport.ScreenBot() + 60;
+            desc1.Position.Y = viewport.Bot() + 60;
             exampleScreen.Add("description1", desc1);
 
             Sprite codeExample = new Sprite(Textures["examples/code/sprite"]);
-            codeExample.Position.Y = desc1.ScreenBot() + 60;
+            codeExample.Position.Y = desc1.Bot() + 60;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -408,11 +408,11 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1200);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.CenterX(viewport.GetCenter().X);
-            desc1.Position.Y = viewport.ScreenBot() + 60;
+            desc1.Position.Y = viewport.Bot() + 60;
             exampleScreen.Add("description1", desc1);
 
             Sprite codeExample = new Sprite(Textures["examples/code/text"]);
-            codeExample.Position.Y = desc1.ScreenBot() + 60;
+            codeExample.Position.Y = desc1.Bot() + 60;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -504,11 +504,11 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1200);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.CenterX(viewport.GetCenter().X);
-            desc1.Position.Y = viewport.ScreenBot() + 60;
+            desc1.Position.Y = viewport.Bot() + 60;
             exampleScreen.Add("description1", desc1);
 
             Sprite codeExample = new Sprite(Textures["examples/code/paragraph"]);
-            codeExample.Position.Y = desc1.ScreenBot() + 60;
+            codeExample.Position.Y = desc1.Bot() + 60;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -563,11 +563,11 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1200);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.CenterX(viewport.GetCenter().X);
-            desc1.Position.Y = viewport.ScreenBot() + 40;
+            desc1.Position.Y = viewport.Bot() + 40;
             exampleScreen.Add("description1", desc1);
 
             Sprite codeExample = new Sprite(Textures["examples/code/compound"]);
-            codeExample.Position.Y = desc1.ScreenBot() + 40;
+            codeExample.Position.Y = desc1.Bot() + 40;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -797,11 +797,11 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1100);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.CenterX(viewport.GetCenter().X);
-            desc1.Position.Y = viewport.ScreenBot() + 40;
+            desc1.Position.Y = viewport.Bot() + 40;
             exampleScreen.Add("description1", desc1);
 
             Sprite codeExample = new Sprite(Textures["examples/code/drag"]);
-            codeExample.Position.Y = desc1.ScreenBot() + 40;
+            codeExample.Position.Y = desc1.Bot() + 40;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -901,11 +901,11 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1200);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.CenterX(viewport.GetCenter().X);
-            desc1.Position.Y = viewport.ScreenBot() + 40;
+            desc1.Position.Y = viewport.Bot() + 40;
             exampleScreen.Add("description1", desc1);
 
             Sprite codeExample = new Sprite(Textures["examples/code/cursors"]);
-            codeExample.Position.Y = desc1.ScreenBot() + 40;
+            codeExample.Position.Y = desc1.Bot() + 40;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -1007,11 +1007,11 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1200);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.CenterX(viewport.GetCenter().X);
-            desc1.Position.Y = viewport.ScreenBot() + 40;
+            desc1.Position.Y = viewport.Bot() + 40;
             exampleScreen.Add("description1", desc1);
 
             Sprite codeExample = new Sprite(Textures["examples/code/sound"]);
-            codeExample.Position.Y = desc1.ScreenBot() + 40;
+            codeExample.Position.Y = desc1.Bot() + 40;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -1074,11 +1074,11 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1200);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.CenterX(viewport.GetCenter().X);
-            desc1.Position.Y = viewport.ScreenBot() + 40;
+            desc1.Position.Y = viewport.Bot() + 40;
             exampleScreen.Add("description1", desc1);
 
             Sprite codeExample = new Sprite(Textures["examples/code/alpha"]);
-            codeExample.Position.Y = desc1.ScreenBot() + 40;
+            codeExample.Position.Y = desc1.Bot() + 40;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -1117,11 +1117,11 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1200);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.CenterX(viewport.GetCenter().X);
-            desc1.Position.Y = viewport.ScreenBot() + 40;
+            desc1.Position.Y = viewport.Bot() + 40;
             exampleScreen.Add("description1", desc1);
 
             Sprite codeExample = new Sprite(Textures["examples/code/masks"]);
-            codeExample.Position.Y = desc1.ScreenBot() + 40;
+            codeExample.Position.Y = desc1.Bot() + 40;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -1165,11 +1165,11 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1200);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.CenterX(viewport.GetCenter().X);
-            desc1.Position.Y = viewport.ScreenBot() + 40;
+            desc1.Position.Y = viewport.Bot() + 40;
             exampleScreen.Add("description1", desc1);
 
             Sprite codeExample = new Sprite(Textures["examples/code/radial"]);
-            codeExample.Position.Y = desc1.ScreenBot() + 40;
+            codeExample.Position.Y = desc1.Bot() + 40;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -1215,11 +1215,11 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1200);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.CenterX(viewport.GetCenter().X);
-            desc1.Position.Y = viewport.ScreenBot() + 40;
+            desc1.Position.Y = viewport.Bot() + 40;
             exampleScreen.Add("description1", desc1);
 
             Sprite codeExample = new Sprite(Textures["examples/code/blur"]);
-            codeExample.Position.Y = desc1.ScreenBot() + 40;
+            codeExample.Position.Y = desc1.Bot() + 40;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -1265,11 +1265,11 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1200);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.CenterX(viewport.GetCenter().X);
-            desc1.Position.Y = viewport.ScreenBot() + 40;
+            desc1.Position.Y = viewport.Bot() + 40;
             exampleScreen.Add("description1", desc1);
 
             Sprite codeExample = new Sprite(Textures["examples/code/pixelate"]);
-            codeExample.Position.Y = desc1.ScreenBot() + 40;
+            codeExample.Position.Y = desc1.Bot() + 40;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -1315,11 +1315,11 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1200);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.CenterX(viewport.GetCenter().X);
-            desc1.Position.Y = viewport.ScreenBot() + 40;
+            desc1.Position.Y = viewport.Bot() + 40;
             exampleScreen.Add("description1", desc1);
 
             Sprite codeExample = new Sprite(Textures["examples/code/noise"]);
-            codeExample.Position.Y = desc1.ScreenBot() + 40;
+            codeExample.Position.Y = desc1.Bot() + 40;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -1418,11 +1418,11 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1200);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.Center(new Vector2(viewport.Width / 2 + viewport.Position.X, 0));
-            desc1.Position.Y = viewport.ScreenBot() + 20;
+            desc1.Position.Y = viewport.Bot() + 20;
             exampleScreen.Add("description1", desc1);
 
             Sprite codeExample = new Sprite(Textures["examples/code/animation"]);
-            codeExample.Position.Y = desc1.ScreenBot() + 20;
+            codeExample.Position.Y = desc1.Bot() + 20;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -1471,11 +1471,11 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1000);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.Center(new Vector2(viewport.Width / 2 + viewport.Position.X, 0));
-            desc1.Position.Y = viewport.ScreenBot() + 20;
+            desc1.Position.Y = viewport.Bot() + 20;
             exampleScreen.Add("description1", desc1);
 
             Sprite codeExample = new Sprite(Textures["examples/code/character"]);
-            codeExample.Position.Y = desc1.ScreenBot() + 20;
+            codeExample.Position.Y = desc1.Bot() + 20;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -1531,11 +1531,11 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1000);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.Center(new Vector2(viewport.Width / 2 + viewport.Position.X, 0));
-            desc1.Position.Y = viewport.ScreenBot() + 60;
+            desc1.Position.Y = viewport.Bot() + 60;
             exampleScreen.Add("description1", desc1);
 
             Sprite codeExample = new Sprite(Textures["examples/code/colorShift"]);
-            codeExample.Position.Y = desc1.ScreenBot() + 60;
+            codeExample.Position.Y = desc1.Bot() + 60;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -1634,11 +1634,11 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1000);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.Center(new Vector2(viewport.Width / 2 + viewport.Position.X, 0));
-            desc1.Position.Y = viewport.ScreenBot() + 60;
+            desc1.Position.Y = viewport.Bot() + 60;
             exampleScreen.Add("description1", desc1);
 
             Sprite codeExample = new Sprite(Textures["examples/code/stroke"]);
-            codeExample.Position.Y = desc1.ScreenBot() + 60;
+            codeExample.Position.Y = desc1.Bot() + 60;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -1688,7 +1688,7 @@ namespace MonogameEngine
             // draw the info
 
             Sprite codeExample = new Sprite(Textures["examples/code/dropshadow"]);
-            codeExample.Position.Y = viewport.ScreenBot() + 60;
+            codeExample.Position.Y = viewport.Bot() + 60;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -1760,7 +1760,7 @@ namespace MonogameEngine
 
             Text blendState = new Text("Blendstate:", Fonts.K2D.Hue(Col(143, 140, 140)), 20);
             blendState.Position.X = 270;
-            blendState.Position.Y = viewport.ScreenBot() + 10;
+            blendState.Position.Y = viewport.Bot() + 10;
             exampleScreen.Add("blendstate", blendState);
 
             // alpha blend
@@ -1771,7 +1771,7 @@ namespace MonogameEngine
             Text button1Text = new Text("AlphaBlend", Fonts.K2D.Hue(Col(180, 180, 180))) { Key = "text" };
             button1Text.Center(button1Bg.GetLocalCenter());
             button1.Add(button1Text);
-            button1.Position = new Vector2(250, blendState.ScreenBot() + 10);
+            button1.Position = new Vector2(250, blendState.Bot() + 10);
             exampleScreen.Add("button1", button1);
 
             // additive
@@ -1782,7 +1782,7 @@ namespace MonogameEngine
             Text button2Text = new Text("Additive", Fonts.K2D.Hue(Col(80, 80, 80))) { Key = "text" };
             button2Text.Center(button2Bg.GetLocalCenter());
             button2.Add(button2Text);
-            button2.Position = new Vector2(400, blendState.ScreenBot() + 10);
+            button2.Position = new Vector2(400, blendState.Bot() + 10);
             exampleScreen.Add("button2", button2);
 
             // non premultiplied
@@ -1793,7 +1793,7 @@ namespace MonogameEngine
             Text button3Text = new Text("NonPremux", Fonts.K2D.Hue(Col(80, 80, 80))) { Key = "text" };
             button3Text.Center(button3Bg.GetLocalCenter());
             button3.Add(button3Text);
-            button3.Position = new Vector2(550, blendState.ScreenBot() + 10);
+            button3.Position = new Vector2(550, blendState.Bot() + 10);
             exampleScreen.Add("button3", button3);
 
             // custom
@@ -1804,7 +1804,7 @@ namespace MonogameEngine
             Text button4Text = new Text("Custom", Fonts.K2D.Hue(Col(80, 80, 80))) { Key = "text" };
             button4Text.Center(button4Bg.GetLocalCenter());
             button4.Add(button4Text);
-            button4.Position = new Vector2(700, blendState.ScreenBot() + 10);
+            button4.Position = new Vector2(700, blendState.Bot() + 10);
             exampleScreen.Add("button4", button4);
 
             button1.Target = BlendState.AlphaBlend;
@@ -1820,7 +1820,7 @@ namespace MonogameEngine
 
             Text demo = new Text("Demo:", Fonts.K2D.Hue(Col(143, 140, 140)), 20);
             demo.Position.X = 1020;
-            demo.Position.Y = viewport.ScreenBot() + 10;
+            demo.Position.Y = viewport.Bot() + 10;
             exampleScreen.Add("demo", demo);
 
             Button button5 = new Button();
@@ -1830,7 +1830,7 @@ namespace MonogameEngine
             Text button5Text = new Text("Items", Fonts.K2D.Hue(Col(180, 180, 180))) { Key = "text" };
             button5Text.Center(button5Bg.GetLocalCenter());
             button5.Add(button5Text);
-            button5.Position = new Vector2(1000, blendState.ScreenBot() + 10);
+            button5.Position = new Vector2(1000, blendState.Bot() + 10);
             exampleScreen.Add("button5", button5);
 
             Button button6 = new Button();
@@ -1840,7 +1840,7 @@ namespace MonogameEngine
             Text button6Text = new Text("Large", Fonts.K2D.Hue(Col(80, 80, 80))) { Key = "text" };
             button6Text.Center(button6Bg.GetLocalCenter());
             button6.Add(button6Text);
-            button6.Position = new Vector2(1150, blendState.ScreenBot() + 10);
+            button6.Position = new Vector2(1150, blendState.Bot() + 10);
             exampleScreen.Add("button6", button6);
 
             Button button7 = new Button();
@@ -1850,7 +1850,7 @@ namespace MonogameEngine
             Text button7Text = new Text("Desc", Fonts.K2D.Hue(Col(80, 80, 80))) { Key = "text" };
             button7Text.Center(button7Bg.GetLocalCenter());
             button7.Add(button7Text);
-            button7.Position = new Vector2(1300, blendState.ScreenBot() + 10);
+            button7.Position = new Vector2(1300, blendState.Bot() + 10);
             exampleScreen.Add("button7", button7);
 
             button5.Target = "items";
@@ -1886,7 +1886,7 @@ namespace MonogameEngine
             Box alphaButton1Bg = new Box(50, alphaButton1Text.Height + 20,  Col(100, 50, 140)) { Key = "bg" };
             alphaButton1.Add(alphaButton1Bg);
             alphaButton1Text.Center(alphaButton1Bg.GetLocalCenter());
-            alphaButton1.Position = new Vector2(30, alpha.ScreenBot() + 10);
+            alphaButton1.Position = new Vector2(30, alpha.Bot() + 10);
             alphaButton1.Resize();
             exampleScreen.Add("alphaButton1", alphaButton1);
 
@@ -1906,7 +1906,7 @@ namespace MonogameEngine
             Box alphaButton2Bg = new Box(50, alphaButton2Text.Height + 20, Col(100, 50, 140)) { Key = "bg" };
             alphaButton2.Add(alphaButton2Bg);
             alphaButton2Text.Center(alphaButton2Bg.GetLocalCenter());
-            alphaButton2.Position = new Vector2(85, alpha.ScreenBot() + 10);
+            alphaButton2.Position = new Vector2(85, alpha.Bot() + 10);
             alphaButton2.Resize();
             exampleScreen.Add("alphaButton2", alphaButton2);
 
@@ -1926,7 +1926,7 @@ namespace MonogameEngine
             Box alphaButton3Bg = new Box(50, alphaButton3Text.Height + 20, Col(100, 50, 140)) { Key = "bg" };
             alphaButton3.Add(alphaButton3Bg);
             alphaButton3Text.Center(alphaButton3Bg.GetLocalCenter());
-            alphaButton3.Position = new Vector2(140, alpha.ScreenBot() + 10);
+            alphaButton3.Position = new Vector2(140, alpha.Bot() + 10);
             alphaButton3.Resize();
             exampleScreen.Add("alphaButton3", alphaButton3);
 
@@ -1946,7 +1946,7 @@ namespace MonogameEngine
             Box alphaButton4Bg = new Box(50, alphaButton4Text.Height + 20, Col(100, 50, 140)) { Key = "bg" };
             alphaButton4.Add(alphaButton4Bg);
             alphaButton4Text.Center(alphaButton4Bg.GetLocalCenter());
-            alphaButton4.Position = new Vector2(195, alpha.ScreenBot() + 10);
+            alphaButton4.Position = new Vector2(195, alpha.Bot() + 10);
             alphaButton4.Resize();
             exampleScreen.Add("alphaButton4", alphaButton4);
 
@@ -1973,7 +1973,7 @@ namespace MonogameEngine
             Box radiusButton1Bg = new Box(50, radiusButton1Text.Height + 20, Col(100, 50, 140)) { Key = "bg" };
             radiusButton1.Add(radiusButton1Bg);
             radiusButton1Text.Center(radiusButton1Bg.GetLocalCenter());
-            radiusButton1.Position = new Vector2(30, radius.ScreenBot() + 10);
+            radiusButton1.Position = new Vector2(30, radius.Bot() + 10);
             radiusButton1.Resize();
             exampleScreen.Add("radiusButton1", radiusButton1);
 
@@ -1993,7 +1993,7 @@ namespace MonogameEngine
             Box radiusButton2Bg = new Box(50, radiusButton2Text.Height + 20, Col(100, 50, 140)) { Key = "bg" };
             radiusButton2.Add(radiusButton2Bg);
             radiusButton2Text.Center(radiusButton2Bg.GetLocalCenter());
-            radiusButton2.Position = new Vector2(85, radius.ScreenBot() + 10);
+            radiusButton2.Position = new Vector2(85, radius.Bot() + 10);
             radiusButton2.Resize();
             exampleScreen.Add("radiusButton2", radiusButton2);
 
@@ -2013,7 +2013,7 @@ namespace MonogameEngine
             Box radiusButton3Bg = new Box(50, radiusButton3Text.Height + 20, Col(100, 50, 140)) { Key = "bg" };
             radiusButton3.Add(radiusButton3Bg);
             radiusButton3Text.Center(radiusButton3Bg.GetLocalCenter());
-            radiusButton3.Position = new Vector2(140, radius.ScreenBot() + 10);
+            radiusButton3.Position = new Vector2(140, radius.Bot() + 10);
             radiusButton3.Resize();
             exampleScreen.Add("radiusButton3", radiusButton3);
 
@@ -2033,7 +2033,7 @@ namespace MonogameEngine
             Box radiusButton4Bg = new Box(50, radiusButton4Text.Height + 20, Col(100, 50, 140)) { Key = "bg" };
             radiusButton4.Add(radiusButton4Bg);
             radiusButton4Text.Center(radiusButton4Bg.GetLocalCenter());
-            radiusButton4.Position = new Vector2(195, radius.ScreenBot() + 10);
+            radiusButton4.Position = new Vector2(195, radius.Bot() + 10);
             radiusButton4.Resize();
             exampleScreen.Add("radiusButton4", radiusButton4);
 
@@ -2058,7 +2058,7 @@ namespace MonogameEngine
                     easing.Resize();
                     easing.Render(true);
 
-                    List<Element> ourButtons = exampleScreen.GetElementsByPattern("powerButton");
+                    List<Element> ourButtons = exampleScreen.GetElementsByPattern("easingButton");
                     foreach (Element ourButton in ourButtons)
                     {
                         Button button = ourButton as Button;
@@ -2086,41 +2086,41 @@ namespace MonogameEngine
                 powerButtonText.Center(powerButtonBg.GetLocalCenter());
                 powerButton.Position = new Vector2(50, 280 + i * 50);
                 powerButton.Resize();
-                exampleScreen.Add("powerButton" + i, powerButton);
+                exampleScreen.Add("easingButton" + i, powerButton);
             }
 
-            exampleScreen.Elements["powerButton0"].ClickHandler(exampleScreen.Elements["powerButton0"]);
+            exampleScreen.Elements["easingButton0"].ClickHandler(exampleScreen.Elements["easingButton0"]);
 
             // custom blend state
 
             Text tag1 = new Text("AlphaBlendFunction:", Fonts.K2D.Hue(Col(143, 140, 140)), 20);
             tag1.Position.X = 240 - tag1.Width;
-            tag1.Position.Y = viewport.ScreenBot() + 120 + 0;
+            tag1.Position.Y = viewport.Bot() + 120 + 0;
             exampleScreen.Add("customtag1", tag1);
 
             Text tag2 = new Text("AlphaDestinationBlend:", Fonts.K2D.Hue(Col(143, 140, 140)), 20);
             tag2.Position.X = 240 - tag2.Width;
-            tag2.Position.Y = viewport.ScreenBot() + 150 + 3;
+            tag2.Position.Y = viewport.Bot() + 150 + 3;
             exampleScreen.Add("customtag2", tag2);
 
             Text tag3 = new Text("AlphaSourceBlend:", Fonts.K2D.Hue(Col(143, 140, 140)), 20);
             tag3.Position.X = 240 - tag3.Width;
-            tag3.Position.Y = viewport.ScreenBot() + 210 + 6;
+            tag3.Position.Y = viewport.Bot() + 210 + 6;
             exampleScreen.Add("customtag3", tag3);
 
             Text tag4 = new Text("ColorBlendFunction:", Fonts.K2D.Hue(Col(143, 140, 140)), 20);
             tag4.Position.X = 240 - tag4.Width;
-            tag4.Position.Y = viewport.ScreenBot() + 270 + 9;
+            tag4.Position.Y = viewport.Bot() + 270 + 9;
             exampleScreen.Add("customtag4", tag4);
 
             Text tag5 = new Text("ColorDestinationBlend:", Fonts.K2D.Hue(Col(143, 140, 140)), 20);
             tag5.Position.X = 240 - tag5.Width;
-            tag5.Position.Y = viewport.ScreenBot() + 300 + 12;
+            tag5.Position.Y = viewport.Bot() + 300 + 12;
             exampleScreen.Add("customtag5", tag5);
 
             Text tag6 = new Text("ColorSourceBlend:", Fonts.K2D.Hue(Col(143, 140, 140)), 20);
             tag6.Position.X = 240 - tag6.Width;
-            tag6.Position.Y = viewport.ScreenBot() + 360 + 15;
+            tag6.Position.Y = viewport.Bot() + 360 + 15;
             exampleScreen.Add("customtag6", tag6);
 
             // AlphaBlendFunction
@@ -2141,7 +2141,7 @@ namespace MonogameEngine
                 Box localButtonBg = new Box(localButtonText.Width + 20, localButtonText.Height + 10, Col(30, 20, 40)) { Key = "bg" };
                 localButton.Add(localButtonBg);
                 localButtonText.Center(localButtonBg.GetLocalCenter());
-                localButton.Position = new Vector2(1300, blendState.ScreenBot() + 10);
+                localButton.Position = new Vector2(1300, blendState.Bot() + 10);
                 localButton.Resize();
                 exampleScreen.Add("customButton1_" + exampleScreen.Flags["hash"]++, localButton);
 
@@ -2172,7 +2172,7 @@ namespace MonogameEngine
                 Box localButtonBg = new Box(localButtonText.Width + 20, localButtonText.Height + 10, Col(30, 20, 40)) { Key = "bg" };
                 localButton.Add(localButtonBg);
                 localButtonText.Center(localButtonBg.GetLocalCenter());
-                localButton.Position = new Vector2(1300, blendState.ScreenBot() + 10);
+                localButton.Position = new Vector2(1300, blendState.Bot() + 10);
                 localButton.Resize();
                 exampleScreen.Add("customButton2_" + exampleScreen.Flags["hash"]++, localButton);
 
@@ -2209,7 +2209,7 @@ namespace MonogameEngine
                 Box localButtonBg = new Box(localButtonText.Width + 20, localButtonText.Height + 10, Col(30, 20, 40)) { Key = "bg" };
                 localButton.Add(localButtonBg);
                 localButtonText.Center(localButtonBg.GetLocalCenter());
-                localButton.Position = new Vector2(1300, blendState.ScreenBot() + 10);
+                localButton.Position = new Vector2(1300, blendState.Bot() + 10);
                 localButton.Resize();
                 exampleScreen.Add("customButton3_" + exampleScreen.Flags["hash"]++, localButton);
 
@@ -2246,7 +2246,7 @@ namespace MonogameEngine
                 Box localButtonBg = new Box(localButtonText.Width + 20, localButtonText.Height + 10, Col(30, 20, 40)) { Key = "bg" };
                 localButton.Add(localButtonBg);
                 localButtonText.Center(localButtonBg.GetLocalCenter());
-                localButton.Position = new Vector2(1300, blendState.ScreenBot() + 10);
+                localButton.Position = new Vector2(1300, blendState.Bot() + 10);
                 localButton.Resize();
                 exampleScreen.Add("customButton4_" + exampleScreen.Flags["hash"]++, localButton);
 
@@ -2277,7 +2277,7 @@ namespace MonogameEngine
                 Box localButtonBg = new Box(localButtonText.Width + 20, localButtonText.Height + 10, Col(30, 20, 40)) { Key = "bg" };
                 localButton.Add(localButtonBg);
                 localButtonText.Center(localButtonBg.GetLocalCenter());
-                localButton.Position = new Vector2(1300, blendState.ScreenBot() + 10);
+                localButton.Position = new Vector2(1300, blendState.Bot() + 10);
                 localButton.Resize();
                 exampleScreen.Add("customButton5_" + exampleScreen.Flags["hash"]++, localButton);
 
@@ -2314,7 +2314,7 @@ namespace MonogameEngine
                 Box localButtonBg = new Box(localButtonText.Width + 20, localButtonText.Height + 10, Col(30, 20, 40)) { Key = "bg" };
                 localButton.Add(localButtonBg);
                 localButtonText.Center(localButtonBg.GetLocalCenter());
-                localButton.Position = new Vector2(1300, blendState.ScreenBot() + 10);
+                localButton.Position = new Vector2(1300, blendState.Bot() + 10);
                 localButton.Resize();
                 exampleScreen.Add("customButton6_" + exampleScreen.Flags["hash"]++, localButton);
 
@@ -2337,6 +2337,8 @@ namespace MonogameEngine
             }
 
             exampleScreen.HideByPattern("custom");
+            exampleScreen.HideByPattern("radius");
+            exampleScreen.HideByPattern("easing");
         }
 
         void Test_ClickAlphaButton(Element element)
@@ -2569,15 +2571,21 @@ namespace MonogameEngine
             if (target == "items")
             {
                 viewport.ShowByPattern("dagger");
+                smokeScreen.HideByPattern("radius");
+                smokeScreen.HideByPattern("easing");
             }
             else if (target == "big")
             {
                 viewport.Elements["bigglow"].Visible = true;
+                smokeScreen.ShowByPattern("radius");
+                smokeScreen.ShowByPattern("easing");
             }
             else
             {
                 viewport.Elements["desc"].Visible = true;
                 viewport.Elements["descglow"].Visible = true;
+                smokeScreen.ShowByPattern("radius");
+                smokeScreen.ShowByPattern("easing");
             }
         }
 
@@ -2613,11 +2621,11 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1200);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.CenterX(viewport.GetCenter().X);
-            desc1.Position.Y = viewport.ScreenBot() + 60;
+            desc1.Position.Y = viewport.Bot() + 60;
             exampleScreen.Add("description1", desc1);
 
             Sprite codeExample = new Sprite(Textures["examples/code/fog"]);
-            codeExample.Position.Y = desc1.ScreenBot() + 60;
+            codeExample.Position.Y = desc1.Bot() + 60;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -2726,11 +2734,11 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1200);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.CenterX(viewport.GetCenter().X);
-            desc1.Position.Y = viewport.ScreenBot() + 60;
+            desc1.Position.Y = viewport.Bot() + 60;
             exampleScreen.Add("description1", desc1);
 
             Sprite codeExample = new Sprite(Textures["examples/code/strokeGlow"]);
-            codeExample.Position.Y = desc1.ScreenBot() + 60;
+            codeExample.Position.Y = desc1.Bot() + 60;
             codeExample.CenterX(viewport.GetCenter().X);
             exampleScreen.Add("codeExample", codeExample);
 
@@ -2752,47 +2760,139 @@ namespace MonogameEngine
             viewport.Center(viewportBg);
             exampleScreen.Add("viewport", viewport);
 
+            viewport.Flags["nextZap"] = 0;
+
             // draw the examples
-            Sprite bg = new Sprite(0, 0, Textures["examples/battle_background"], zIndex: 0);
-            bg.Alpha = .4f;
-            viewport.Add("bg", bg);
 
             // loot beam
             Sprite chestSprite = new Sprite(Textures["examples/chest1"]);
-            chestSprite.Position = new Vector2(50, 50);
+            chestSprite.Position = new Vector2(0, 200);
             viewport.Add("chestSprite", chestSprite);
             Sprite chestSprite2 = new Sprite(Textures["examples/chest2"]);
-            chestSprite2.Position = new Vector2(50, 50);
+            chestSprite2.Position = new Vector2(0, 200);
             viewport.Add("chestSprite2", chestSprite2);
 
-            Box lootbeam = new Box(300, 750, Color.Black, 85, -230);
+            Box lootbeam = new Box(300, 750, Color.Black, 30, -80);
             lootbeam.BlendState = BlendState.Additive;
-            //lootbeam.Alpha = .9f;
             lootbeam.Origin = new Vector2(lootbeam.Width / 2, lootbeam.Height / 2);
             lootbeam.Rotation = -(float)Math.PI / 2;
             lootbeam.AddEffect(EffectType.ChestLootBeam);
             viewport.Add("lootbeam", lootbeam);
 
+            Box lootBox = new Box(110, 40, Color.Black, 115, 370);
+            lootBox.Visible = false;
+            viewport.Add("lootBox", lootBox);
+            AnimateSparkle(lootBox);
+
             lootbeam.zIndex = 1.1f;
+            lootBox.zIndex = 1.1f;
             chestSprite2.zIndex = 1.2f;
 
-            // Box lootbeam4 = new Box(0, 0, ToX(200), ToY(750), Color.Black, 12.19f);
-            //    lootbeam4.Rotation = -(float)Math.PI / 2f;
-            //    EffectAgent chestLootBeam = lootbeam4.AddEffect(EffectType.ChestLootBeam);
-            //    lootbeam4.Center(Elements["combat_loot_chest"].GetCenter() + new Vector2(ToX(-300), ToY(415)));
-            //    lootbeam4.Key = "combat_loot_beam";
-            //    lootbeam4.ScrollKey = "combatChest";
-            //    lootbeam4.Visible = false;
-            //    Elements[lootbeam4.Key] = lootbeam4;
-
-            // takeAllGlow.Center(takeAllButton.GetCenter() + new Vector2(0, ToY(-4)));
-
-            // takeAllGlow.Key = "combat_loot_takeall_glow";
-            // Elements[takeAllGlow.Key] = takeAllGlow;
+            Text lootBeamText = new Text("Loot beam", Fonts.K2D.Hue(Col(140, 140, 140)), 24);
+            lootBeamText.Center(chestSprite2);
+            lootBeamText.Position.Y = chestSprite2.Bot() - 30;
+            viewport.Add("lootBeamText", lootBeamText);
 
             // zap
 
+            Sprite coil = new Sprite(Textures["examples/coil"]);
+            coil.Position.X = viewport.Width - coil.Width;
+            coil.Position.Y = viewport.Height - coil.Height;
+            coil.FlipHorizontal = true;
+            viewport.Add("coil", coil);
+
+            Sprite coil2 = new Sprite(Textures["examples/coil"]);
+            coil2.Scale = .6f;
+            coil2.zIndex = .8f;
+            coil2.Resize();
+            coil2.Position.X = viewport.Width - coil2.Width - 300;
+            coil2.Position.Y = viewport.Height - coil2.Height;
+            viewport.Add("coil2", coil2);
+
+            Text zapText = new Text("Zap", Fonts.K2D.Hue(Col(140, 140, 140)), 24);
+            zapText.Center(coil2);
+            zapText.Position.X += 125;
+            zapText.Position.Y -= 20;
+            viewport.Add("zapText", zapText);
+
             // level up
+
+            AnimationSystem hero = AnimationSystems["hero"];
+            hero.Load();
+
+            Sprite sprite = new Sprite(Textures[hero.Sequences["IdleLeft"].Frames[0].FrameKey]);
+            sprite.Scale = .4f;
+            sprite.Resize();
+            sprite.Position.X = 300;
+            sprite.Position.Y = 90;
+            viewport.Add("sprite", sprite);
+
+            Character character = new Character();
+            character.AnimationSystem = hero.Clone();
+            character.Sprite = sprite;
+            sprite.Target = character;
+            character.AnimationSystem.SetSource(character);
+
+            // Beam 1 //
+            Box front = new Box(126 * 2, 130 * 2, Color.Black, sprite.zIndex + .001f);
+            front.Center(sprite.Position + new Vector2(170, 130));
+            front.Origin = new Vector2(front.Width / 2f, front.Height / 2f);
+            front.RotationStyle = RotationStyle.InPlace;
+            front.Rotation = (float)Math.PI / 2f;
+            front.BlendState = BlendState.Additive;
+            front.AddEffect(EffectType.LevelUp1Front);
+            viewport.Add("front1", front);
+            // Beam 2 //
+            Box back = new Box(126 * 2, 130 * 2, Color.Black, sprite.zIndex + .001f);
+            back.Center(sprite.Position + new Vector2(170, 130));
+            back.Origin = new Vector2(back.Width / 2f, back.Height / 2f);
+            back.RotationStyle = RotationStyle.InPlace;
+            back.Rotation = (float)Math.PI / 2f;
+            back.BlendState = BlendState.Additive;
+            back.AddEffect(EffectType.LevelUp1Back);
+            viewport.Add("back1", back);
+            // Beam 3 //
+            Box front2 = new Box(126 * 2, 130 * 2, Color.Black, sprite.zIndex + .001f);
+            front2.Center(sprite.Position + new Vector2(170, 130));
+            front2.Origin = new Vector2(front2.Width / 2f, front2.Height / 2f);
+            front2.RotationStyle = RotationStyle.InPlace;
+            front2.Rotation = (float)Math.PI / 2f;
+            front2.BlendState = BlendState.Additive;
+            front2.AddEffect(EffectType.LevelUp2Front);
+            viewport.Add("front2", front2);
+            // Beam 2 //
+            Box back2 = new Box(126 * 2, 130 * 2, Color.Black, sprite.zIndex + .001f);
+            back2.Center(sprite.Position + new Vector2(170, 130));
+            back2.Origin = new Vector2(back2.Width / 2f, back2.Height / 2f);
+            back2.RotationStyle = RotationStyle.InPlace;
+            back2.Rotation = (float)Math.PI / 2f;
+            back2.BlendState = BlendState.Additive;
+            back2.AddEffect(EffectType.LevelUp2Back);
+            viewport.Add("back2", back2);
+
+            front.zIndex = 1.1f;
+            back.zIndex = .9f;
+            front2.zIndex = 1.1f;
+            back2.zIndex = .9f;
+
+            front.Alpha = .9f;
+            front2.Alpha = .9f;
+            back.Alpha = .9f;
+            back2.Alpha = .9f;
+
+            Box gradient = new Box(150, 60, Col(255, 200, 100));
+            gradient.Alpha = .5f;
+            gradient.Center(character.GetCenter());
+            gradient.Position.Y += 70;
+            gradient.AddEffect(EffectType.Gradient);
+            viewport.Add("gradient", gradient);
+
+            Text lvlText = new Text("Level Up", Fonts.K2D.Hue(Col(140, 140, 140)), 24);
+            lvlText.Center(gradient);
+            lvlText.Position.Y += 40;
+            viewport.Add("lvlText", lvlText);
+
+            character.AnimateIdle();
 
             // draw the info
 
@@ -2801,7 +2901,7 @@ namespace MonogameEngine
             Paragraph paragraph1 = new Paragraph(p1, 1200);
             Element desc1 = MakeParagraph(paragraph1);
             desc1.CenterX(viewport.GetCenter().X);
-            desc1.Position.Y = viewport.ScreenBot() + 60;
+            desc1.Position.Y = viewport.Bot() + 60;
             exampleScreen.Add("description1", desc1);
 
             exampleScreen.Position = new Vector2(270, 0);
@@ -2818,21 +2918,21 @@ namespace MonogameEngine
                 if (CurrentMouseState.ScrollWheelValue < PreviousScrollWheelValue)
                 {
                     ScrollOffsets["exampleButtons"].Y -= 58;
-                    ScrollOffsets["exampleButtons"].Y = Math.Clamp(ScrollOffsets["exampleButtons"].Y, -496, 0);
+                    ScrollOffsets["exampleButtons"].Y = Math.Clamp(ScrollOffsets["exampleButtons"].Y, -322, 0);
                 }
                 // scrolling down
                 else if (CurrentMouseState.ScrollWheelValue > PreviousScrollWheelValue)
                 {
                     ScrollOffsets["exampleButtons"].Y += 58;
-                    ScrollOffsets["exampleButtons"].Y = Math.Clamp(ScrollOffsets["exampleButtons"].Y, -496, 0);
+                    ScrollOffsets["exampleButtons"].Y = Math.Clamp(ScrollOffsets["exampleButtons"].Y, -322, 0);
                 }
 
-                float percentComplete = ScrollOffsets["exampleButtons"].Y / -496;
+                float percentComplete = ScrollOffsets["exampleButtons"].Y / -322;
 
                 Element scrollBar = screen.Elements["exampleScrollBar"];
                 scrollBar.Position.Y = 8 + (1080 - scrollBar.Height - 16) * percentComplete;
             }
-
+            
             // button example
             if (Screens.ContainsKey("ButtonExample") && Screens["ButtonExample"].Visible)
             {
@@ -3108,6 +3208,19 @@ namespace MonogameEngine
                         debug.Position.Y += character.Sprite.Height;
                         viewport.Add("debug", debug);
                     }
+                }
+            }
+            // effects example
+            if (Screens.ContainsKey("EffectsExample") && Screens["EffectsExample"].Visible)
+            {
+                Screen exampleScreen = Screens["EffectsExample"];
+                Screen viewport = (Screen)exampleScreen.Elements["viewport"];
+
+                if (MsEllapsed - viewport.Flags["nextZap"] > 0)
+                {
+                    Element zap = AnimateZap(viewport, new Vector2(635, 475), new Vector2(840, 380), 1.1f, 1.0f, .6f);
+                    zap.zIndex = .9f;
+                    viewport.Flags["nextZap"] = MsEllapsed + Random.Next(100) + 10;
                 }
             }
         }
