@@ -115,7 +115,7 @@ namespace MonogameEngine
             float totalTime = (float)gameTime.TotalGameTime.TotalSeconds;
 
             List<Screen> screens = Screens.Values.ToList();
-            screens.OrderBy(@screen => @screen.zIndex);
+            screens = screens.OrderBy(@screen => @screen.zIndex).ToList();
 
             // render all our screens
             foreach (Screen screen in screens)
