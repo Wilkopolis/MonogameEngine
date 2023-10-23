@@ -38,6 +38,11 @@ namespace MonogameEngine
                 if (this is not Screen && !this.GetScreen().IsMouseOver())
                     return false;
 
+                return this.HitBoxCheck();
+            }
+
+            public bool HitBoxCheck()
+            {
                 switch (this.HitBoxType)
                 {
                     case HitBoxType.Texture:
@@ -111,11 +116,11 @@ namespace MonogameEngine
 
                     case HitBoxType.Circle:
 
-                    return true;
+                        return true;
 
                     case HitBoxType.Polygon:
 
-                    return true;
+                        return true;
 
                     case HitBoxType.Compound:
 
@@ -128,7 +133,7 @@ namespace MonogameEngine
                             }
                         }
 
-                    return false;
+                        return false;
                 }
 
                 return false;
