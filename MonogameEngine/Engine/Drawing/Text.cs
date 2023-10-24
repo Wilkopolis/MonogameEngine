@@ -476,7 +476,7 @@ namespace MonogameEngine
                     pos -= new Vector2(10, 10);
 
                 spriteBatch.Begin(SpriteSortMode.Immediate, this.BlendState);
-                spriteBatch.Draw(this.GetTexture(), pos, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+                spriteBatch.Draw(this.GetTexture(), pos, null, Color.White * this.Alpha, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
                 spriteBatch.End();
             }
         }
