@@ -70,7 +70,7 @@ namespace MonogameEngine
                 List<Element> results = new List<Element>();
                 foreach (Element child in this.Children)
                 {
-                    if (child.Key != null && child.Key.Contains(key)) 
+                    if (child.Key != null && child.Key.Contains(key))
                         results.Add(child);
                 }
 
@@ -109,9 +109,15 @@ namespace MonogameEngine
                 element = null;
             }
 
+            public void Remove(string key)
+            {
+                Element element = this.Children.First(x => x.Key == key);
+                Remove(element);
+            }
+
             public override void Unload()
             {
-                while (this.Children.Count > 0) 
+                while (this.Children.Count > 0)
                 {
                     Element element = Children[0];
                     element.Unload();
@@ -125,7 +131,23 @@ namespace MonogameEngine
                 this.Children.Add(element);
                 element.Parent = this;
 
-                if (element is not Text)
+                if (this is Button && element is not Text)
+                {
+                    element.MouseOverCheck = true;
+                    element.Clickable = true;
+                }
+
+                if (resize)
+                    this.Resize();
+            }
+
+            public void Add(string key, Element element, bool resize = false)
+            {
+                this.Children.Add(element);
+                element.Parent = this;
+                element.Key = key;
+
+                if (this is Button && element is not Text)
                 {
                     element.MouseOverCheck = true;
                     element.Clickable = true;
@@ -137,7 +159,7 @@ namespace MonogameEngine
 
             public override void Render(bool direct = false)
             {
-                foreach(Element e in this.Children)
+                foreach (Element e in this.Children)
                     e.Render(direct);
             }
 
@@ -159,7 +181,7 @@ namespace MonogameEngine
 
             public override bool IsOnScreen()
             {
-                foreach(Element e in this.Children)
+                foreach (Element e in this.Children)
                 {
                     if (e.IsOnScreen())
                         return true;
@@ -167,7 +189,7 @@ namespace MonogameEngine
 
                 return false;
             }
-            
+
             public override void Resize()
             {
                 // we've calculated the width and height perfectly and this 
@@ -207,7 +229,7 @@ namespace MonogameEngine
                         w2 = rightSide;
 
                     // maybe one day they'll fix this !
-                    if (element is Text) 
+                    if (element is Text)
                         continue;
 
                     // find the top most element
